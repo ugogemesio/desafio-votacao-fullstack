@@ -2,7 +2,16 @@
 
 ## Objetivo
 
-No cooperativismo, cada associado possui um voto e as decisões são tomadas em assembleias, por votação. Imagine que você deve criar uma solução we para gerenciar e participar dessas sessões de votação.
+No cooperativismo, cada 
+associado possui um
+voto e as 
+decisões são tomadas em 
+assembleias, por 
+votação. 
+
+Imagine que você deve criar uma solução we para gerenciar e participar dessas 
+sessões de votação.
+
 Essa solução deve ser executada na nuvem e promover as seguintes funcionalidades através de uma API REST / Front:
 
 - Cadastrar uma nova pauta
@@ -12,13 +21,16 @@ Essa solução deve ser executada na nuvem e promover as seguintes funcionalidad
   é identificado por um id único e pode votar apenas uma vez por pauta)
 - Contabilizar os votos e dar o resultado da votação na pauta
 
-Para fins de exercício, a segurança das interfaces pode ser abstraída e qualquer chamada para as interfaces pode ser considerada como autorizada. A solução deve ser construída em java com Spring-boot e Angular/React conforme orientação, mas os frameworks e bibliotecas são de livre escolha (desde que não infrinja direitos de uso).
+Para fins de exercício, a segurança das interfaces pode ser abstraída e qualquer chamada para as interfaces pode ser considerada como autorizada. 
+A solução deve ser construída em java com Spring-boot e Angular/React conforme orientação, 
+mas os frameworks e bibliotecas são de livre escolha (desde que não infrinja direitos de uso).
 
 É importante que as pautas e os votos sejam persistidos e que não sejam perdidos com o restart da aplicação.
 
 ## Como proceder
 
-Por favor, realize o FORK desse repositório e implemente sua solução no FORK em seu repositório GItHub, ao final, notifique da conclusão para que possamos analisar o código implementado.
+Por favor, realize o FORK desse repositório e implemente sua solução no FORK em seu repositório GItHub, ao final,
+notifique da conclusão para que possamos analisar o código implementado.
 
 Lembre de deixar todas as orientações necessárias para executar o seu código.
 
