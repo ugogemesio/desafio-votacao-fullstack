@@ -1,5 +1,4 @@
-package com.dbserver.ugo.votacao.Associado;
-import com.dbserver.ugo.votacao.voto.Voto;
+package com.dbserver.ugo.votacao.associado;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

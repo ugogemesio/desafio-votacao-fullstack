@@ -1,2 +1,7 @@
-#build/
-#.gradle/
+/build/
+/.gradle/
+/gradle/
+/.idea/
+/*.iml
+*.log
+

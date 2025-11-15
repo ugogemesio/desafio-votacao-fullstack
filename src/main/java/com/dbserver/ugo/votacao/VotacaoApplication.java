@@ -1,3 +1,4 @@
+package com.dbserver.ugo.votacao;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,5 +8,6 @@ public class VotacaoApplication {
 		SpringApplication.run(VotacaoApplication.class, args);
         System.out.print("Bora");
         System.out.print("Gerar DTOS");
+        System.out.print("Implementar teste");
 	}
 }
