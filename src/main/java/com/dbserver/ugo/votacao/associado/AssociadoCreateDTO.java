@@ -6,7 +6,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class AssociadoUpdateDTO {
+public class AssociadoCreateDTO {
     @NotBlank(message = "Nome do associado é obrigatório")
     private String nomeAssociado;
 }

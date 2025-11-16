@@ -1,11 +1,11 @@
 package com.dbserver.ugo.votacao.assembleia;
 
+import com.dbserver.ugo.votacao.assembleia.exception.AssembleiaNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class AssembleiaService {
@@ -13,50 +13,40 @@ public class AssembleiaService {
     private final AssembleiaRepository assembleiaRepository;
     private final AssembleiaMapper assembleiaMapper;
 
-    public List<AssembleiaResponseDTO> findByNomeAssembleia(String nomeAssembleia) {
+    public AssembleiaResponseDTO criar(AssembleiaCreateDTO dto) {
+        Assembleia entity = assembleiaMapper.toEntity(dto);
+        Assembleia saved = assembleiaRepository.save(entity);
+        return assembleiaMapper.toDTO(saved);
+    }
+
+    public AssembleiaResponseDTO atualizar(Long id, AssembleiaUpdateDTO dto) {
+        Assembleia entity = assembleiaRepository.findById(id)
+                .orElseThrow(() -> new AssembleiaNotFoundException(id));
+
+        assembleiaMapper.updateEntityFromDTO(dto, entity);
+        assembleiaRepository.save(entity);
+
+        return assembleiaMapper.toDTO(entity);
+    }
+
+    public void deletar(Long id) {
+        Assembleia entity = assembleiaRepository.findById(id)
+                .orElseThrow(() -> new AssembleiaNotFoundException(id));
+        assembleiaRepository.delete(entity);
+    }
+
+    public List<AssembleiaResponseDTO> buscarPorNome(String nomeAssembleia) {
         return assembleiaRepository.findByNomeAssembleia(nomeAssembleia)
                 .stream()
                 .map(assembleiaMapper::toDTO)
                 .toList();
     }
 
-    public List<AssembleiaResponseDTO> findAfter(LocalDateTime data) {
-        return assembleiaRepository.findByDataRealizacaoAssembleiaAfter(data)
-                .stream()
-                .map(assembleiaMapper::toDTO)
-                .toList();
-    }
-
-    public List<AssembleiaResponseDTO> findBefore(LocalDateTime data) {
-        return assembleiaRepository.findByDataRealizacaoAssembleiaBefore(data)
-                .stream()
-                .map(assembleiaMapper::toDTO)
-                .toList();
-    }
-
-    public List<AssembleiaResponseDTO> findBetween(LocalDateTime inicio, LocalDateTime fim) {
-        return assembleiaRepository.findByDataRealizacaoAssembleiaBetween(inicio, fim)
-                .stream()
-                .map(assembleiaMapper::toDTO)
-                .toList();
-    }
-
-    public AssembleiaResponseDTO findById(Long id) {
+    public AssembleiaResponseDTO buscarPorId(Long id) {
         Assembleia entity = assembleiaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Assembleia não encontrada"));
-
+                .orElseThrow(() -> new AssembleiaNotFoundException(id));
         return assembleiaMapper.toDTO(entity);
     }
 
-    public AssembleiaResponseDTO criarAssembleia(Assembleia entity) {
-        Assembleia saved = assembleiaRepository.save(entity);
-        return assembleiaMapper.toDTO(saved);
-    }
 
-    public void deletarAssembleia(Long id) {
-        if (!assembleiaRepository.existsById(id)) {
-            throw new RuntimeException("Assembleia não encontrada");
-        }
-        assembleiaRepository.deleteById(id);
-    }
 }

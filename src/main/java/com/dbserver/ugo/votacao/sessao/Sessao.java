@@ -21,7 +21,7 @@ public class Sessao {
     private Long idSessao;
 
     @Column
-    String assunto;
+    private String assunto;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_pauta")

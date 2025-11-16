@@ -12,9 +12,9 @@ public class Associado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long idAssociado;
+    private Long idAssociado;
 
     @Column
-    String nomeAssociado;
+    private String nomeAssociado;
 
 }

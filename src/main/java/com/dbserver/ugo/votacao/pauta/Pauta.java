@@ -2,7 +2,6 @@ package com.dbserver.ugo.votacao.pauta;
 
 import com.dbserver.ugo.votacao.assembleia.Assembleia;
 import com.dbserver.ugo.votacao.sessao.Sessao;
-import com.dbserver.ugo.votacao.voto.Voto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,10 +19,10 @@ public class Pauta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long idPauta;
+    private Long idPauta;
 
     @Column
-    String descricaoPauta;
+    private String descricaoPauta;
 
     @Column(nullable = false)
     private String titulo;

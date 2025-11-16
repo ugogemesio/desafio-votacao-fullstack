@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,16 +18,16 @@ public class Assembleia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long idAssembleia;
+    private Long idAssembleia;
 
     @Column
-    String nomeAssembleia;
+    private String nomeAssembleia;
 
     @Column
-    String descricaoAssembleia;
+    private String descricaoAssembleia;
 
     @Column
-    LocalDateTime dataRealizacaoAssembleia;
+    private LocalDateTime dataRealizacaoAssembleia;
 
     @OneToMany(mappedBy = "assembleia", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pauta> pautas;
