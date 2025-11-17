@@ -1,46 +1,56 @@
 package com.dbserver.ugo.votacao.associado;
 
+import com.dbserver.ugo.votacao.associado.exception.AssociadoNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AssociadoService {
 
-    private final AssociadoRepository associadoRepository;
-    private final AssociadoMapper associadoMapper;
+    private final AssociadoRepository repository;
+    private final AssociadoMapper mapper;
 
     public AssociadoResponseDTO criar(AssociadoCreateDTO dto) {
-        Associado entity = associadoMapper.toEntity(dto);
-        Associado saved = associadoRepository.save(entity);
-        return associadoMapper.toDTO(saved);
+        Associado entity = mapper.toEntity(dto);
+        return mapper.toDTO(repository.save(entity));
     }
 
     public AssociadoResponseDTO buscarPorId(Long id) {
-        Associado entity = associadoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Associado não encontrado"));
-        return associadoMapper.toDTO(entity);
+        Associado entity = repository.findById(id)
+                .orElseThrow(() -> new AssociadoNotFoundException(id));
+        return mapper.toDTO(entity);
     }
 
     public List<AssociadoResponseDTO> listar() {
-        return associadoMapper.toDTOList(associadoRepository.findAll());
+        return mapper.toDTOList(repository.findAll());
     }
 
-    public AssociadoResponseDTO atualizar(Long id, AssociadoUpdateDTO dto) {
-        Associado entity = associadoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Associado não encontrado"));
+    public AssociadoResponseDTO atualizar(Long id, AssociadoPutDTO dto) {
+        Associado entity = repository.findById(id)
+                .orElseThrow(() -> new AssociadoNotFoundException(id));
 
-        associadoMapper.updateEntityFromDTO(dto, entity);
-        associadoRepository.save(entity);
+        mapper.updateFromPut(dto, entity);
 
-        return associadoMapper.toDTO(entity);
+        return mapper.toDTO(repository.save(entity));
+    }
+
+
+    public AssociadoResponseDTO atualizarParcial(Long id, AssociadoPatchDTO dto) {
+        Associado entity = repository.findById(id)
+                .orElseThrow(() -> new AssociadoNotFoundException(id));
+
+        mapper.updateFromPatch(dto, entity);
+
+        return mapper.toDTO(repository.save(entity));
     }
 
     public void deletar(Long id) {
-        if (!associadoRepository.existsById(id)) {
-            throw new RuntimeException("Associado não encontrado");
+        if (!repository.existsById(id)) {
+            throw new AssociadoNotFoundException(id);
         }
-        associadoRepository.deleteById(id);
+        repository.deleteById(id);
     }
 }

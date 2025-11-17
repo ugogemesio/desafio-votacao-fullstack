@@ -2,42 +2,61 @@ package com.dbserver.ugo.votacao.voto;
 
 import com.dbserver.ugo.votacao.associado.Associado;
 import com.dbserver.ugo.votacao.associado.AssociadoRepository;
+import com.dbserver.ugo.votacao.exceptions.NegocioException;
 import com.dbserver.ugo.votacao.sessao.Sessao;
 import com.dbserver.ugo.votacao.sessao.SessaoRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class VotoService {
 
     private final VotoRepository votoRepository;
-    private final AssociadoRepository associadoRepository;
     private final SessaoRepository sessaoRepository;
+    private final AssociadoRepository associadoRepository;
     private final VotoMapper votoMapper;
 
-    public VotoResponseDTO votar(VotoCreateDTO dto) {
+    @Transactional
+    public VotoResponseDTO votar(Long sessaoId, Long associadoId, boolean valor) {
 
-        Associado associado = associadoRepository.findById(dto.getIdAssociado())
-                .orElseThrow(() -> new EntityNotFoundException("Associado não encontrado"));
+        Sessao sessao = sessaoRepository.findById(sessaoId)
+                .orElseThrow(() -> new NegocioException("Sessão não encontrada"));
 
-        Sessao sessao = sessaoRepository.findById(dto.getIdSessao())
-                .orElseThrow(() -> new EntityNotFoundException("Sessão não encontrada"));
+        Associado associado = associadoRepository.findById(associadoId)
+                .orElseThrow(() -> new NegocioException("Associado não encontrado"));
 
-        // REGRA: associado só pode votar 1 vez por sessão
-        if (votoRepository.existsByAssociadoIdAssociadoAndSessaoIdSessao(
-                dto.getIdAssociado(), dto.getIdSessao())) {
-            throw new IllegalArgumentException("Associado já votou nesta sessão");
+        LocalDateTime agora = LocalDateTime.now();
+        if (agora.isBefore(sessao.getAbertura()) || agora.isAfter(sessao.getFechamento())) {
+            throw new NegocioException("A sessão não está aberta para votação");
+        }
+
+        boolean jaVotou = votoRepository.existsByAssociadoIdAndSessaoId(associadoId, sessao.getId());
+
+
+        if (jaVotou) {
+            throw new NegocioException("Este associado já votou nesta pauta");
         }
 
         Voto voto = new Voto();
         voto.setAssociado(associado);
         voto.setSessao(sessao);
-        voto.setValor(dto.getValor());
+        voto.setValor(valor);
 
-        Voto saved = votoRepository.save(voto);
+        Voto salvo = votoRepository.save(voto);
 
-        return votoMapper.toDTO(saved);
+        return votoMapper.toDTO(salvo);
+    }
+
+    public Optional<Voto> buscarEntidade(Long id) {
+        return votoRepository.findById(id);
+    }
+
+    public Optional<VotoResponseDTO> buscar(Long id) {
+        return votoRepository.findById(id).map(votoMapper::toDTO);
     }
 }

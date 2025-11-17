@@ -1,12 +1,10 @@
 package com.dbserver.ugo.votacao.associado;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
-@AllArgsConstructor
-@Data
-public class AssociadoCreateDTO {
+public record AssociadoCreateDTO(
     @NotBlank(message = "Nome do associado é obrigatório")
-    private String nomeAssociado;
-}
+    String nome,
+    @NotBlank(message = "CPF do associado é obrigatório")
+    String cpf
+){}

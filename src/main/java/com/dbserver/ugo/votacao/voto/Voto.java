@@ -4,19 +4,24 @@ import com.dbserver.ugo.votacao.associado.Associado;
 import com.dbserver.ugo.votacao.sessao.Sessao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "voto")
+@Table(
+        name = "voto",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"id_sessao", "id_associado"})
+)
 public class Voto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idVoto;
+    private Long id;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_associado")
@@ -28,5 +33,4 @@ public class Voto {
 
     @Column(nullable = false)
     private boolean valor;
-
 }

@@ -1,12 +1,12 @@
 package com.dbserver.ugo.votacao.pauta;
 
-import lombok.Data;
+import java.time.LocalDateTime;
 
-@Data
-public class PautaResponseDTO {
+public record PautaResponseDTO (
 
-    private Long idPauta;
-    private String descricaoPauta;
-    private String titulo;
-    private Long idAssembleia;
-}
+    Long id,
+    String descricao,
+    String titulo,
+    LocalDateTime dataCriacao
+
+){}

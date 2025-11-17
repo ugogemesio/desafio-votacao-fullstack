@@ -1,17 +1,19 @@
 package com.dbserver.ugo.votacao.pauta;
 
-import com.dbserver.ugo.votacao.assembleia.Assembleia;
 import com.dbserver.ugo.votacao.sessao.Sessao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="pauta")
@@ -19,19 +21,23 @@ public class Pauta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPauta;
+    private Long id;
 
-    @Column
-    private String descricaoPauta;
+    @Column(nullable = false)
+    private String descricao;
 
     @Column(nullable = false)
     private String titulo;
 
-    @OneToMany(mappedBy = "pauta", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Sessao> sessoes;
+    @Column(nullable = false)
+    private LocalDateTime dataCriacao;
 
-    @ManyToOne
-    @JoinColumn(name = "id_assembleia", nullable = false)
-    private Assembleia assembleia;
+    @OneToOne(mappedBy = "pauta")
+    private Sessao sessao;
+
+    @PrePersist
+    public void prePersist() {
+        this.dataCriacao = LocalDateTime.now();
+    }
 
 }

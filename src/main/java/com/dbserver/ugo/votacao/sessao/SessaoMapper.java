@@ -1,28 +1,14 @@
 package com.dbserver.ugo.votacao.sessao;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface SessaoMapper {
 
-    @Mapping(source = "pauta.idPauta", target = "idPauta")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "pauta", ignore = true)
+    Sessao toEntity(SessaoCreateDTO dto);
+
+    @Mapping(target = "pautaId", source = "pauta.id")
     SessaoResponseDTO toDTO(Sessao entity);
-
-    default Sessao toEntity(SessaoCreateDTO dto) {
-        if (dto == null) return null;
-
-        Sessao sessao = new Sessao();
-        sessao.setAssunto(dto.getAssunto());
-        return sessao;
-    }
-
-    default void updateEntityFromDTO(SessaoUpdateDTO dto, @MappingTarget Sessao entity) {
-        if (dto == null) return;
-
-        if (dto.getAssunto() != null) {
-            entity.setAssunto(dto.getAssunto());
-        }
-    }
 }

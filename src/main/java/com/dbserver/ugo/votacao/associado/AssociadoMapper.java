@@ -13,8 +13,15 @@ public interface AssociadoMapper {
 
     List<AssociadoResponseDTO> toDTOList(List<Associado> entities);
 
-    @Mapping(target = "idAssociado", ignore = true)
+    @Mapping(target = "id", ignore = true)
     Associado toEntity(AssociadoCreateDTO dto);
 
-    void updateEntityFromDTO(AssociadoUpdateDTO dto, @MappingTarget Associado entity);
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
+    @Mapping(target = "id", ignore = true)
+    void updateFromPut(AssociadoPutDTO dto, @MappingTarget Associado entity);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
+    void updateFromPatch(AssociadoPatchDTO dto, @MappingTarget Associado entity);
+
 }

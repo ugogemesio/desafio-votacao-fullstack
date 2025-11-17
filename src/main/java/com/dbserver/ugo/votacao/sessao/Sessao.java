@@ -4,30 +4,39 @@ import com.dbserver.ugo.votacao.pauta.Pauta;
 import com.dbserver.ugo.votacao.voto.Voto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "sessao")
 public class Sessao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idSessao;
+    private Long id;
 
-    @Column
-    private String assunto;
+    @Column(nullable = false)
+    private LocalDateTime abertura;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_pauta")
+    @Column(nullable = false)
+    private LocalDateTime fechamento;
+
+    @Column(nullable = false)
+    private Integer duracaoMinutos;
+
+    @OneToOne
+    @JoinColumn(name = "pauta_id", unique = true, nullable = false)
     private Pauta pauta;
 
-    @OneToMany(mappedBy = "sessao", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "sessao")
     private List<Voto> votos;
-
 }

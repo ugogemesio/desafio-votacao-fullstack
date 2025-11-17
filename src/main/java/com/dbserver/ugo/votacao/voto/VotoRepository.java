@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VotoRepository extends JpaRepository<Voto, Long> {
 
-    boolean existsByAssociadoIdAssociadoAndSessaoIdSessao(Long idAssociado, Long idSessao);
+    boolean existsByAssociadoIdAndSessaoId(Long associadoId, Long sessaoId);
+
 
 }

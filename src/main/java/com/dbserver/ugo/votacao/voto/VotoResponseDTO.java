@@ -1,12 +1,9 @@
 package com.dbserver.ugo.votacao.voto;
 
-import lombok.Data;
+public record VotoResponseDTO (
 
-@Data
-public class VotoResponseDTO {
-
-    private Long idVoto;
-    private Long idAssociado;
-    private Long idSessao;
-    private boolean valor;
-}
+    Long id,
+    Long idAssociado,
+    Long idSessao,
+    boolean valor
+){}
