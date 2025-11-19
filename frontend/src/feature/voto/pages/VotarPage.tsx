@@ -7,7 +7,7 @@ const VotarPage = () => {
   
   const [idSessao, setIdSessao] = useState<number | undefined>();
   const [valor, setValor] = useState(true);
-  const [cpfAssociado, setCpfAssociado] = useState<string | undefined>(localStorage.getItem('cpfAssociado') ?? undefined);  
+  const [cpfAssociado] = useState<string | undefined>(localStorage.getItem('cpfAssociado') ?? undefined);  
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
