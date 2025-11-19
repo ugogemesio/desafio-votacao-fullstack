@@ -7,5 +7,6 @@ public record SessaoResponseDTO(
         LocalDateTime abertura,
         LocalDateTime fechamento,
         Integer duracaoMinutos,
-        Long pautaId
-) {}
+        Long pautaId,
+        SessaoStatus status
+) { }

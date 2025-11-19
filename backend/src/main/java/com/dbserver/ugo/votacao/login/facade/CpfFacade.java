@@ -1,7 +1,7 @@
 package com.dbserver.ugo.votacao.login.facade;
 
 import com.dbserver.ugo.votacao.login.LoginResponseDTO;
-import com.dbserver.ugo.votacao.login.Status;
+import com.dbserver.ugo.votacao.login.LoginStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
@@ -13,9 +13,9 @@ public class CpfFacade {
 
     public LoginResponseDTO validar(String cpf) {
         if (cpf == null || cpf.length() != 11) {
-            return new LoginResponseDTO(cpf, Status.UNABLE_TO_VOTE);
+            return new LoginResponseDTO(cpf, LoginStatus.UNABLE_TO_VOTE);
         }
-        Status status = random.nextBoolean() ? Status.ABLE_TO_VOTE : Status.UNABLE_TO_VOTE;
+        LoginStatus status = random.nextBoolean() ? LoginStatus.ABLE_TO_VOTE : LoginStatus.UNABLE_TO_VOTE;
         return new LoginResponseDTO(cpf, status);
     }
 }

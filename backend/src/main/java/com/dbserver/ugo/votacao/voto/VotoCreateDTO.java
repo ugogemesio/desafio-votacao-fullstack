@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record VotoCreateDTO(
         @NotNull(message = "O ID do associado é obrigatório")
-        Long idAssociado,
+        String cpfAssociado,
 
         @NotNull(message = "O ID da sessão é obrigatório")
         Long idSessao,

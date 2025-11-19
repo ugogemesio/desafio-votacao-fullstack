@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v1/votos")
 @RequiredArgsConstructor
@@ -14,20 +16,22 @@ public class VotoController {
     private final VotoService votoService;
 
     @PostMapping
-    public ResponseEntity<VotoResponseDTO> votar(@Valid @RequestBody VotoCreateDTO dto) {
+    public ResponseEntity<?> votar(@Valid @RequestBody VotoCreateDTO dto) {
         try {
             VotoResponseDTO response = votoService.votar(
                     dto.idSessao(),
-                    dto.idAssociado(),
+                    dto.cpfAssociado(),
                     dto.valor()
             );
-
             return ResponseEntity.ok(response);
 
         } catch (NegocioException e) {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity
+                    .badRequest()
+                    .body(Map.of("message", e.getMessage()));
         }
     }
+
 
 
     @GetMapping("/{id}")
@@ -37,7 +41,7 @@ public class VotoController {
                         v.id(),
                         v.idAssociado(),
                         v.idSessao(),
-                        v.valor()
+                        v.opcao()
                 )))
                 .orElse(ResponseEntity.notFound().build());
     }

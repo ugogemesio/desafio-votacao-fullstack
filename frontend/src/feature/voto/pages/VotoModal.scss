@@ -1,0 +1,138 @@
+.voto-modal {
+  &__info {
+    background: #f8f9fa;
+    padding: 16px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    
+    p {
+      margin: 0;
+      color: #666;
+      line-height: 1.4;
+    }
+  }
+
+  &__form-group {
+    margin-bottom: 20px;
+  }
+
+  &__label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  &__cpf-display {
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+    font-size: 1.1rem;
+    text-align: center;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__cpf-ausente {
+    color: #dc3545;
+    font-style: italic;
+  }
+
+  &__erro {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff3cd;
+    color: #856404;
+    padding: 16px;
+    border-radius: 6px;
+    border: 1px solid #ffeaa7;
+    margin-bottom: 20px;
+    animation: shake 0.5s ease-in-out;
+  }
+
+  &__erro-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  &__erro-text {
+    flex: 1;
+    font-weight: 500;
+  }
+
+  &__opcoes {
+    margin-bottom: 24px;
+  }
+
+  &__pergunta {
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #333;
+    text-align: center;
+    font-size: 1.1rem;
+  }
+
+  &__botoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  &__opcao {
+    border: 2px solid #e0e0e0;
+    background: white;
+    border-radius: 8px;
+    padding: 20px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover:not(:disabled) {
+      border-color: #007bff;
+      background: #f8f9fa;
+      transform: translateY(-2px);
+    }
+
+    &--selecionada {
+      border-color: #007bff;
+      background: #007bff;
+      color: white;
+      transform: scale(1.02);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+      background: #f8f9fa;
+    }
+  }
+
+  &__opcao-texto {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

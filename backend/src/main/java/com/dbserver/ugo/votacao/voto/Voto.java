@@ -31,6 +31,7 @@ public class Voto {
     @JoinColumn(name = "id_sessao")
     private Sessao sessao;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private boolean valor;
+    private VotoOpcao opcao;
 }

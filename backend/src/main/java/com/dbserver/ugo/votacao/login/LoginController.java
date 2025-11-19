@@ -15,7 +15,7 @@ public class LoginController {
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO request) {
 
         LoginResponseDTO loginResponse = loginService.login(request.cpf())
-                .orElseGet(() -> new LoginResponseDTO(request.cpf(), Status.UNABLE_TO_VOTE));
+                .orElseGet(() -> new LoginResponseDTO(request.cpf(), LoginStatus.UNABLE_TO_VOTE));
 
         return ResponseEntity.ok(loginResponse);
     }

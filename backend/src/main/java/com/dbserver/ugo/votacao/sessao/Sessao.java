@@ -1,5 +1,6 @@
 package com.dbserver.ugo.votacao.sessao;
 
+import com.dbserver.ugo.votacao.resultado.Resultado;
 import com.dbserver.ugo.votacao.pauta.Pauta;
 import com.dbserver.ugo.votacao.voto.Voto;
 import jakarta.persistence.*;
@@ -33,10 +34,22 @@ public class Sessao {
     @Column(nullable = false)
     private Integer duracaoMinutos;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "pauta_id", unique = true, nullable = false)
     private Pauta pauta;
 
-    @OneToMany(mappedBy = "sessao")
+    @OneToMany(mappedBy = "sessao", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Voto> votos;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private SessaoStatus status;
+
+    @PrePersist
+    void onCreate() {
+        this.abertura = LocalDateTime.now();
+        this.duracaoMinutos = (duracaoMinutos == null ? 1 : duracaoMinutos);
+        this.fechamento = abertura.plusMinutes(duracaoMinutos == null ? 1 : duracaoMinutos);
+        this.status = SessaoStatus.ABERTA;
+    }
 }

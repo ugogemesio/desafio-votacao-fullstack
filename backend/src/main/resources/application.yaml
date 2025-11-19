@@ -1,13 +1,11 @@
+# Configurações padrão (aplicam-se a todos os perfis)
 spring:
-  datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: ''
+  config:
+    activate:
+      on-profile: default
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
@@ -17,3 +15,28 @@ spring:
     baseline-on-migrate: true
     locations: classpath:db/migration
 
+---
+# Perfil TEST (H2)
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ''
+
+---
+# Perfil DEV (PostgreSQL Render)
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://dpg-d4e7otv5r7bs73fju0ng-a.ohio-postgres.render.com:5432/desafiovotacao_250e
+    username: desafiovotacao
+    password: ${DB_PASSWORD:ORO53Vdv5VajImzBct0sw1mmGB0UbOEB}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect

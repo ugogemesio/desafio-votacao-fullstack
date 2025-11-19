@@ -1,0 +1,21 @@
+.loading-spinner {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  
+  &--sm {
+    width: 16px;
+    height: 16px;
+  }
+  
+  &--md {
+    width: 24px;
+    height: 24px;
+  }
+  
+  &--lg {
+    width: 32px;
+    height: 32px;
+  }
+}

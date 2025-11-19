@@ -35,6 +35,12 @@ public class AssociadoController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/cpf/{cpf}")
+    public ResponseEntity<AssociadoResponseDTO> buscarPorCpf(@PathVariable String cpf) {
+        AssociadoResponseDTO response = associadoService.buscarPorCpf(cpf);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping
     public ResponseEntity<List<AssociadoResponseDTO>> listar() {
         List<AssociadoResponseDTO> response = associadoService.listar();

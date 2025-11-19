@@ -1,7 +1,7 @@
 package com.dbserver.ugo.votacao.pauta;
 
+import com.dbserver.ugo.votacao.exceptions.NegocioException;
 import com.dbserver.ugo.votacao.pauta.exception.PautaNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,15 +21,12 @@ public class PautaService {
         return pautaMapper.toDTO(saved);
     }
 
-
-    public PautaResponseDTO atualizar(Long idPauta, PautaPutDTO dto) {
-        Pauta entity = pautaRepository.findById(idPauta)
-                .orElseThrow(() -> new PautaNotFoundException(idPauta));
-        pautaMapper.updateFromPut(dto, entity);
-        return pautaMapper.toDTO(pautaRepository.save(entity));
+    public List<PautaResponseDTO> listarPorStatus(PautaStatus status) {
+        return pautaRepository.findByStatus(status)
+                .stream()
+                .map(pautaMapper::toDTO) // usar MapStruct ou manualmente
+                .toList();
     }
-
-
 
     public PautaResponseDTO atualizarParcial(Long idPauta, PautaPatchDTO dto) {
         Pauta entity = pautaRepository.findById(idPauta)
@@ -54,10 +51,11 @@ public class PautaService {
     }
 
     public void deletar(Long idPauta) {
-        if (!pautaRepository.existsById(idPauta)) {
-            throw new PautaNotFoundException(idPauta);
+        Pauta entity = pautaRepository.findById(idPauta)
+                .orElseThrow(() -> new PautaNotFoundException(idPauta));
+        if (!entity.getSessoes().isEmpty()) {
+            throw new NegocioException("Não é permitido excluir uma pauta que já possui sessão");
         }
-        pautaRepository.deleteById(idPauta);
+        pautaRepository.delete(entity);
     }
-
 }

@@ -15,7 +15,7 @@ public class LoginService {
 
     public Optional<LoginResponseDTO> login(String cpf) {
         LoginResponseDTO loginResponseDTO = cpfFacade.validar(cpf);
-        if (loginResponseDTO.status() == Status.UNABLE_TO_VOTE) {
+        if (loginResponseDTO.status() == LoginStatus.UNABLE_TO_VOTE) {
             return Optional.empty();
         }
         return Optional.of(loginResponseDTO);

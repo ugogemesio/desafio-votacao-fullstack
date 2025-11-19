@@ -34,6 +34,13 @@ public class PautaController {
         PautaResponseDTO response = pautaService.buscarPorId(idPauta);
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<PautaResponseDTO>> buscarPorStatus(@PathVariable PautaStatus status) {
+        List<PautaResponseDTO> response = pautaService.listarPorStatus(status);
+        return ResponseEntity.ok(response);
+    }
+
+
 
     @GetMapping
     public ResponseEntity<List<PautaResponseDTO>> listar() {
@@ -41,13 +48,6 @@ public class PautaController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{idPauta}")
-    public ResponseEntity<PautaResponseDTO> atualizar(
-            @PathVariable Long idPauta,
-            @Valid @RequestBody PautaPutDTO dto) {
-        PautaResponseDTO response = pautaService.atualizar(idPauta, dto);
-        return ResponseEntity.ok(response);
-    }
 
     @PatchMapping("/{idPauta}")
     public ResponseEntity<PautaResponseDTO> atualizarParcial(

@@ -1,0 +1,143 @@
+.sessao-resumo {
+  background: black;
+  color: white;
+  padding: 60px 20px;
+
+  &__header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  &__title {
+    font-size: 2.5rem;
+    margin: 0 0 16px 0;
+    font-weight: 700;
+  }
+
+  &__subtitle {
+    font-size: 1.2rem;
+    margin: 0;
+    opacity: 0.9;
+  }
+
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+    max-width: 1000px;
+    margin: 0 auto 50px;
+  }
+
+  &__actions {
+    text-align: center;
+  }
+
+  &__action-btn {
+    padding: 14px 32px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &--primary {
+      background-color: #fff;
+      color: #667eea;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  &__icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+
+    &--aberta {
+      background: rgba(82, 196, 26, 0.2);
+    }
+
+    &--fechada {
+      background: rgba(24, 144, 255, 0.2);
+    }
+
+    &--nao-iniciada {
+      background: rgba(250, 173, 20, 0.2);
+    }
+
+    &--total {
+      background: rgba(114, 46, 209, 0.2);
+    }
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__value {
+    font-size: 2rem;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  &__label {
+    margin: 4px 0 0 0;
+    opacity: 0.9;
+    font-size: 0.9rem;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .sessao-resumo {
+    padding: 40px 20px;
+
+    &__title {
+      font-size: 2rem;
+    }
+
+    &__stats {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .stat-card {
+      padding: 16px;
+      flex-direction: column;
+      text-align: center;
+
+      &__icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+      }
+
+      &__value {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}

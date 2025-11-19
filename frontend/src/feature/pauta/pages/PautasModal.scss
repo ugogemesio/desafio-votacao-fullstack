@@ -1,0 +1,162 @@
+.pautas-sessao-modal {
+  &__loading {
+    text-align: center;
+    padding: 40px 20px;
+    
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #007bff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    p {
+      margin: 0;
+      color: #666;
+    }
+  }
+
+  &__empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+
+    p {
+      margin: 0 0 8px 0;
+    }
+  }
+
+  &__empty-subtitle {
+    font-size: 0.9rem;
+    color: #888;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  &__info {
+    margin: 0;
+    color: #666;
+    flex: 1;
+  }
+
+  &__count {
+    background: #007bff;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  &__list {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+}
+
+.pauta-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: #007bff;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__content {
+    flex: 1;
+    margin-right: 16px;
+  }
+
+  &__titulo {
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  &__descricao {
+    margin: 0 0 12px 0;
+    color: #666;
+    line-height: 1.4;
+    font-size: 0.9rem;
+  }
+
+  &__info {
+    display: flex;
+    gap: 16px;
+    font-size: 0.8rem;
+    color: #888;
+  }
+
+  &__id {
+    font-weight: 600;
+  }
+
+  &__data {
+    font-style: italic;
+  }
+
+  &__actions {
+    flex-shrink: 0;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .pauta-item {
+    flex-direction: column;
+    gap: 12px;
+
+    &__content {
+      margin-right: 0;
+    }
+
+    &__info {
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    &__actions {
+      width: 100%;
+      
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+
+  .pautas-sessao-modal__header {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .pautas-sessao-modal__count {
+    align-self: flex-start;
+  }
+}

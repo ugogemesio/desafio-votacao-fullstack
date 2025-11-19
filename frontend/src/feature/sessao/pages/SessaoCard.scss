@@ -1,0 +1,85 @@
+.sessao-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+
+  &--destaque {
+    border-color: #1890ff;
+    box-shadow: 0 2px 8px rgba(24, 144, 255, 0.2);
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  &__titulo {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333;
+  }
+
+  &__status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    &--aberta {
+      background-color: #f6ffed;
+      color: #52c41a;
+      border: 1px solid #b7eb8f;
+    }
+
+    &--fechada {
+      background-color: #fff2f0;
+      color: #ff4d4f;
+      border: 1px solid #ffccc7;
+    }
+
+    &--nao-iniciada {
+      background-color: #f0f0f0;
+      color: #666;
+      border: 1px solid #d9d9d9;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__data,
+  &__duracao,
+  &__pauta {
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+
+  &__vote-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__aguardando {
+    font-size: 0.9rem;
+    color: #999;
+    font-style: italic;
+  }
+}

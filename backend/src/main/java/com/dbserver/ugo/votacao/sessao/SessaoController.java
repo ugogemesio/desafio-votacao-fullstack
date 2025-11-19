@@ -8,6 +8,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -37,8 +38,20 @@ public class SessaoController {
         return ResponseEntity.ok(sessaoService.buscarPorId(idSessao));
     }
 
+    @PostMapping("/sessoes/{idSessao}")
+    public ResponseEntity<SessaoResponseDTO> encerraSessao(@PathVariable Long idSessao) {
+        return ResponseEntity.ok(sessaoService.encerrarSessao(idSessao));
+    }
+
     @GetMapping("/sessoes")
     public ResponseEntity<List<SessaoResponseDTO>> listar() {
         return ResponseEntity.ok(sessaoService.listar());
     }
+
+    @GetMapping("/sessoesPautas")
+    public ResponseEntity<List<SessaoPautaDTO>> listarPorPautas() {
+        List<SessaoPautaDTO> sessoes = sessaoService.listarSessaoPauta();
+        return ResponseEntity.ok(sessoes);
+    }
+
 }

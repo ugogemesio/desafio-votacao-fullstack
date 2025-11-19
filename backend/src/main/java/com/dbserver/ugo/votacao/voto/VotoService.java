@@ -22,12 +22,12 @@ public class VotoService {
     private final VotoMapper votoMapper;
 
     @Transactional
-    public VotoResponseDTO votar(Long sessaoId, Long associadoId, boolean valor) {
+    public VotoResponseDTO votar(Long sessaoId, String associadoCpf, boolean valor) {
 
         Sessao sessao = sessaoRepository.findById(sessaoId)
                 .orElseThrow(() -> new NegocioException("Sessão não encontrada"));
 
-        Associado associado = associadoRepository.findById(associadoId)
+        Associado associado = associadoRepository.findByCpf(associadoCpf)
                 .orElseThrow(() -> new NegocioException("Associado não encontrado"));
 
         LocalDateTime agora = LocalDateTime.now();
@@ -35,22 +35,26 @@ public class VotoService {
             throw new NegocioException("A sessão não está aberta para votação");
         }
 
-        boolean jaVotou = votoRepository.existsByAssociadoIdAndSessaoId(associadoId, sessao.getId());
-
-
-        if (jaVotou) {
+        if (votoRepository.existsByAssociadoIdAndSessaoId(associado.getId(), sessao.getId())) {
             throw new NegocioException("Este associado já votou nesta pauta");
         }
 
         Voto voto = new Voto();
         voto.setAssociado(associado);
         voto.setSessao(sessao);
-        voto.setValor(valor);
+        voto.setOpcao(valor ? VotoOpcao.SIM : VotoOpcao.NAO);
 
-        Voto salvo = votoRepository.save(voto);
-
-        return votoMapper.toDTO(salvo);
+        votoRepository.save(voto);
+        return votoMapper.toDTO(voto);
     }
+    public void deletar(Long id) {
+        throw new NegocioException("Não é permitido excluir um voto.");
+    }
+
+    public VotoResponseDTO atualizar(Long id, boolean novoValor) {
+        throw new NegocioException("Não é permitido modificar um voto.");
+    }
+
 
     public Optional<Voto> buscarEntidade(Long id) {
         return votoRepository.findById(id);

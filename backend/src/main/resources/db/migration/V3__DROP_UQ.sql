@@ -1,0 +1,1 @@
+ALTER TABLE sessao DROP CONSTRAINT IF EXISTS uk_sessao_pauta;

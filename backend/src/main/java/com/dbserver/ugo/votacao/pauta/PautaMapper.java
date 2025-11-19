@@ -15,15 +15,15 @@ public interface PautaMapper {
     List<PautaResponseDTO> toDTOList(List<Pauta> entities);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "sessao", ignore = true)
+    @Mapping(target = "sessoes", ignore = true) 
     Pauta toEntity(PautaCreateDTO dto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "sessao", ignore = true)
+    @Mapping(target = "sessoes", ignore = true)
     void updateFromPatch(PautaPatchDTO dto, @MappingTarget Pauta entity);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "sessao", ignore = true)
+    @Mapping(target = "sessoes", ignore = true)
     void updateFromPut(PautaPutDTO dto, @MappingTarget Pauta entity);
 }

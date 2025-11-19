@@ -19,22 +19,24 @@ repositories {
 }
 
 dependencies {
-    // Spring Boot JPA + H2
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'org.postgresql:postgresql'
 
-    // Web e Thymeleaf
+
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
-    // Lombok
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    // Devtools
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-    // Testes
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'com.h2database:h2'
 
@@ -43,6 +45,9 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation "org.flywaydb:flyway-core:10.0.0"
+    implementation "org.flywaydb:flyway-database-postgresql:10.0.0"
+    implementation 'com.vladmihalcea:hibernate-types-60:2.21.1'
 
 }
 

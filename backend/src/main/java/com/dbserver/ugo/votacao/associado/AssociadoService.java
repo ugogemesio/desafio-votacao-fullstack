@@ -24,6 +24,12 @@ public class AssociadoService {
         return mapper.toDTO(entity);
     }
 
+    public AssociadoResponseDTO buscarPorCpf(String cpf) {
+        Associado entity = repository.findByCpf(cpf)
+                .orElseThrow(() -> new AssociadoNotFoundException(cpf));
+        return mapper.toDTO(entity);
+    }
+
     public List<AssociadoResponseDTO> listar() {
         return mapper.toDTOList(repository.findAll());
     }

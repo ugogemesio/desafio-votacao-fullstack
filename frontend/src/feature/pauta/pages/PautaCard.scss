@@ -1,0 +1,125 @@
+.pauta-card {
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: #007bff;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.1);
+  }
+
+  &--destaque {
+    border: 2px solid #007bff;
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  &__titulo {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+    flex: 1;
+  }
+
+  &__status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-left: 12px;
+
+    &--aberta {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    &--votacao {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    &--fechada {
+      background: #f8d7da;
+      color: #721c24;
+    }
+  }
+
+  &__descricao {
+    color: #4a5568;
+    margin: 0 0 16px 0;
+    line-height: 1.5;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+
+  &__data {
+    font-size: 0.875rem;
+    color: #718096;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.vote-actions {
+  display: flex;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .pauta-card {
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    &__status {
+      align-self: flex-start;
+      margin-left: 0;
+    }
+
+    &__footer {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+
+    &__actions {
+      justify-content: stretch;
+      
+      .btn {
+        flex: 1;
+      }
+    }
+  }
+
+  .vote-actions {
+    width: 100%;
+    
+    .btn {
+      flex: 1;
+    }
+  }
+}
