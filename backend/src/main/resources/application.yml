@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${DATABASE_URL}
+    url: ${SPRING_DATASOURCE_URL}
     username: desafiovotacao
-    password: ${DATABASE_PASSWORD:}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
