@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./feature/login/pages/LoginsPage";
 import AssociadosPage from "./feature/associado/pages/AssociadosPage";
 
@@ -10,7 +10,7 @@ import { SessaoPage } from "./feature/sessao/pages/SessaoPage";
 
 export function AppRoutes() {
   return (
-    <BrowserRouter>
+    
       <Routes>
         {/* Página de login */}
         <Route path="/login" element={<LoginPage />} />
@@ -29,6 +29,6 @@ export function AppRoutes() {
         {/* Página de erro 404 */}
         <Route path="*" element={<h1>404 - Página não encontrada</h1>} />
       </Routes>
-    </BrowserRouter>
+    
   );
 }

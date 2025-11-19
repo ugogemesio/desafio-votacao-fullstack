@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Header.scss';
 
 export const Header: React.FC = () => {
@@ -9,8 +10,8 @@ export const Header: React.FC = () => {
           <h1>Sistema de Votação Cooperativa</h1>
         </div>
         <nav className="header__nav">
-          <a href="/pautas" className="header__nav-link">Pautas</a>
-          <a href="/sessoes" className="header__nav-link">Sessões de Votação</a>
+          <Link to="/pautas" className="header__nav-link">Pautas</Link>
+          <Link to="/sessoes" className="header__nav-link">Sessões de Votação</Link>
         </nav>
         <div className="header__profile">
           <div className="header__avatar">U</div>
