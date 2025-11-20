@@ -59,17 +59,56 @@ public class SessaoService {
         return sessaoRepository.findById(idSessao)
                 .orElseThrow(() -> new SessaoNotFoundException("Sessão não encontrada"));
     }
+
+    @Transactional
     public List<SessaoPautaDTO> listarSessaoPauta() {
-        return sessaoRepository.findAllWithPauta();
+        // Busca entidades completas
+        List<Sessao> sessoes = sessaoRepository.findAll();
+
+
+        for (Sessao sessao : sessoes) {
+            if (sessao.getStatus().equals(SessaoStatus.ABERTA) &&
+                    sessao.getFechamento().isBefore(LocalDateTime.now())) {
+                sessao.setStatus(SessaoStatus.ENCERRADA);
+            }
+        }
+
+
+        sessaoRepository.saveAll(sessoes);
+
+
+        return sessoes.stream()
+                .map(sessao -> new SessaoPautaDTO(
+                        sessao.getId(),
+                        sessao.getAbertura(),
+                        sessao.getFechamento(),
+                        sessao.getDuracaoMinutos(),
+                        sessao.getPauta().getId(),
+                        sessao.getStatus(),
+                        sessao.getPauta().getTitulo(),
+                        sessao.getPauta().getDescricao()
+                ))
+                .toList();
     }
+
 
     public SessaoResponseDTO buscarPorId(Long idSessao) {
         return sessaoMapper.toDTO(buscarEntidadePorId(idSessao));
     }
 
+    @Transactional
     public List<SessaoResponseDTO> listar() {
-        return sessaoRepository.findAll()
-                .stream()
+        List<Sessao> sessoes = sessaoRepository.findAll();
+
+        for (Sessao sessao : sessoes) {
+            if (sessao.getStatus().equals(SessaoStatus.ABERTA) &&
+                    sessao.getFechamento().isBefore(LocalDateTime.now())) {
+                sessao.setStatus(SessaoStatus.ENCERRADA);
+            }
+        }
+        sessaoRepository.saveAll(sessoes);
+
+        return sessoes.stream()
                 .map(sessaoMapper::toDTO)
                 .toList();
     }

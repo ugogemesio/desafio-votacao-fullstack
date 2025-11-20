@@ -2,6 +2,7 @@ package com.dbserver.ugo.votacao.pauta;
 
 import com.dbserver.ugo.votacao.exceptions.NegocioException;
 import com.dbserver.ugo.votacao.pauta.exception.PautaNotFoundException;
+import com.dbserver.ugo.votacao.resultado.Resultado;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,22 @@ public class PautaService {
                 .orElseThrow(() -> new PautaNotFoundException(idPauta));
         return pautaMapper.toDTO(entity);
     }
+
+    public PautaResponseDTO buscarResultadoPorIdPauta(Long idPauta) {
+        Pauta entity = pautaRepository.findById(idPauta)
+                .orElseThrow(() -> new PautaNotFoundException(idPauta));
+        Resultado resultado = entity.getResultado();
+        boolean possuiVotos = resultado.getSim() > 0 || resultado.getNao() > 0;
+        if (entity.getStatus().equals(PautaStatus.VOTANDO)) {
+            throw new NegocioException("A pauta ainda está em votação. Resultado indisponível.");
+        }
+        if (!possuiVotos) {
+            throw new NegocioException("A pauta não possui votos registrados. Resultado indisponível.");
+        }
+        return pautaMapper.toDTO(entity);
+    }
+
+
 
     public List<PautaResponseDTO> listar() {
         return pautaRepository.findAll()

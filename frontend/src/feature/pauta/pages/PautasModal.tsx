@@ -19,7 +19,7 @@ export const PautasParaSessaoModal: React.FC<PautasParaSessaoModal> = ({
   const { listaPautaAberta } = usePautas();
   const { criar } = useSessoes();
   const sessaoModal = useModal();
-  
+
   const [pautaSelecionada, setPautaSelecionada] = useState<{
     id: number;
     titulo: string;
@@ -41,9 +41,9 @@ export const PautasParaSessaoModal: React.FC<PautasParaSessaoModal> = ({
   const handleCriarSessao = (duracaoMinutos: number) => {
     if (pautaSelecionada) {
       criar.mutate(
-        { 
-          idPauta: pautaSelecionada.id, 
-          data: { duracaoMinutos } 
+        {
+          idPauta: pautaSelecionada.id,
+          data: { duracaoMinutos }
         },
         {
           onSuccess: () => {
@@ -111,7 +111,7 @@ export const PautasParaSessaoModal: React.FC<PautasParaSessaoModal> = ({
                       <div className="pauta-item__info">
                         <span className="pauta-item__id">ID: {pauta.id}</span>
                         <span className="pauta-item__data">
-                          Criada em: {new Date(pauta.dataCriacao).toLocaleDateString('pt-BR')}
+                          Criada em: {new Date(pauta.dataCriacao).toLocaleString("pt-BR")}
                         </span>
                       </div>
                     </div>

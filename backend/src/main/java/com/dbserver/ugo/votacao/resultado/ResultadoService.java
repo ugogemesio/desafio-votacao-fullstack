@@ -23,10 +23,6 @@ public class ResultadoService {
 
     @Transactional
     public Resultado calcularResultado(Long sessaoId) {
-
-
-
-
         Sessao sessao = sessaoRepository.getReferenceById(sessaoId);
         long totalSim = 0;
         long totalNao = 0;

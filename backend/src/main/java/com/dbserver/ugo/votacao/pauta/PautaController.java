@@ -39,7 +39,11 @@ public class PautaController {
         List<PautaResponseDTO> response = pautaService.listarPorStatus(status);
         return ResponseEntity.ok(response);
     }
-
+    @GetMapping("resultado/{idPauta}")
+    public ResponseEntity<PautaResponseDTO> buscarResultadoPorIdPauta(@PathVariable Long idPauta) {
+        PautaResponseDTO response = pautaService.buscarPorId(idPauta);
+        return ResponseEntity.ok(response);
+    }
 
 
     @GetMapping

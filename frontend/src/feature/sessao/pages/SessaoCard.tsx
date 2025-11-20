@@ -12,8 +12,7 @@ interface SessaoCardProps {
 
 export const SessaoCard: React.FC<SessaoCardProps> = ({
   sessao,
-  onVotar,
-  onResultados
+  onVotar
 }) => {
   const getStatusInfo = (status: string) => {
     switch (status) {
@@ -73,27 +72,8 @@ export const SessaoCard: React.FC<SessaoCardProps> = ({
               >
                 Votar
               </Button>
-              <Button 
-                variant="secondary" 
-                size="sm"
-                onClick={() => onResultados(sessao.id)}
-              >
-                Resultados
-              </Button>
             </div>
           )}
-          
-          {sessao.status === 'ENCERRADA' && (
-            <Button 
-              variant="secondary" 
-              size="sm"
-              onClick={() => onResultados(sessao.id)}
-            >
-              Ver Resultados
-            </Button>
-          )}
-          
-          
         </div>
       </div>
     </Card>

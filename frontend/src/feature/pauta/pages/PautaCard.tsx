@@ -10,10 +10,104 @@ interface PautaCardProps {
   onAbrirSessao: (pautaId: number) => void;
 }
 
+interface GaugeProps {
+  sim: number;
+  nao: number;
+  size?: number;
+}
+
+const Gauge: React.FC<GaugeProps> = ({ sim, nao, size = 80 }) => {
+  const total = sim + nao;
+  const percentage = total > 0 ? (sim / total) * 100 : 0;
+  const strokeWidth = 8;
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDasharray = circumference;
+  const strokeDashoffset = circumference - (percentage / 100) * circumference;
+
+  const getGaugeColor = () => {
+    if (total === 0) return '#6c757d'; // Cinza para sem votos
+    if (percentage > 60) return '#28a745'; // Verde para aprovado
+    if (percentage < 40) return '#dc3545'; // Vermelho para rejeitado
+    return '#ffc107'; // Amarelo para empate/indefinido
+  };
+
+  const getGaugeLabel = () => {
+    if (total === 0) return 'Sem aclamação';
+    if (percentage > 60) return 'Aprovada';
+    if (percentage < 40) return 'Rejeitada';
+    return 'Empate';
+  };
+
+  return (
+    <div className="gauge-container" style={{ width: size, height: size }}>
+      <svg width={size} height={size} className="gauge">
+        {/* Fundo do gauge */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke="#e9ecef"
+          strokeWidth={strokeWidth}
+          fill="none"
+        />
+        {/* Preenchimento do gauge */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke={getGaugeColor()}
+          strokeWidth={strokeWidth}
+          fill="none"
+          strokeDasharray={strokeDasharray}
+          strokeDashoffset={strokeDashoffset}
+          strokeLinecap="round"
+          transform={`rotate(-90 ${size / 2} ${size / 2})`}
+          className="gauge__fill"
+        />
+        {/* Texto central */}
+        <text
+          x="50%"
+          y="45%"
+          textAnchor="middle"
+          className="gauge__percentage"
+          fontSize={total > 0 ? "14" : "10"}
+          fontWeight="bold"
+          fill={getGaugeColor()}
+        >
+          {total > 0 ? `${Math.round(percentage)}%` : '—'}
+        </text>
+        <text
+          x="50%"
+          y="65%"
+          textAnchor="middle"
+          className="gauge__label"
+          fontSize="8"
+          fill="#6c757d"
+        >
+          {getGaugeLabel()}
+        </text>
+      </svg>
+      
+      {/* Legenda dos votos */}
+      {total > 0 && (
+        <div className="gauge__legend">
+          <div className="gauge__legend-item">
+            <span className="gauge__legend-color" style={{ backgroundColor: '#28a745' }}></span>
+            <span className="gauge__legend-text">Sim: {sim}</span>
+          </div>
+          <div className="gauge__legend-item">
+            <span className="gauge__legend-color" style={{ backgroundColor: '#dc3545' }}></span>
+            <span className="gauge__legend-text">Não: {nao}</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export const PautaCard: React.FC<PautaCardProps> = ({
   pauta,
-  onResultados,
   onAbrirSessao
 }) => {
   const getStatusInfo = (status: string) => {
@@ -46,12 +140,14 @@ export const PautaCard: React.FC<PautaCardProps> = ({
       <div className="pauta-card__footer">
         <div className="pauta-card__info">
           <span className="pauta-card__data">
-            Criada em: {new Date(pauta.dataCriacao).toLocaleTimeString()}
+            Criada em: {new Date(pauta.dataCriacao).toLocaleDateString('pt-BR')}
           </span>
-          <span className="pauta-card__data">
-            Situação: {pauta.resultado.status}
-          </span>
-
+          
+          {pauta.status === 'DEFINIDA' && (
+            <div className="pauta-card__resultado">
+              <Gauge sim={pauta.resultado.sim} nao={pauta.resultado.nao} />
+            </div>
+          )}
         </div>
 
         <div className="pauta-card__actions">
@@ -62,35 +158,6 @@ export const PautaCard: React.FC<PautaCardProps> = ({
               onClick={() => onAbrirSessao(pauta.id)}
             >
               Abrir Sessão
-            </Button>
-          )}
-
-          {pauta.status === 'VOTANDO' && (
-            <div className="vote-actions">
-              <Button
-                variant="success"
-                size="sm"
-
-              >
-                Votar
-              </Button>
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={() => onResultados(pauta.id)}
-              >
-                Resultados
-              </Button>
-            </div>
-          )}
-
-          {pauta.status === 'DEFINIDA' && (
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => onResultados(pauta.id)}
-            >
-              Ver Resultados
             </Button>
           )}
         </div>
