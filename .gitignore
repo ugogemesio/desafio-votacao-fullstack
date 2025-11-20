@@ -1,7 +1,8 @@
-/build/
-/.gradle/
-/gradle/
-/.idea/
-/*.iml
-*.log
+backend/.env
+backend/.gradle/
+backend/*.hprof
 
+frontend/.vite/
+.idea/
+backend/.idea/
+backend/build/
