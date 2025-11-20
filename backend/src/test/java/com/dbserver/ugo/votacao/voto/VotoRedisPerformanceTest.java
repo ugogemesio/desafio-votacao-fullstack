@@ -75,23 +75,23 @@ class VotoRedisPerformanceTest {
 
     @BeforeEach
     void setup() {
-        // Limpa dados antes de cada teste
+        
         votoRepository.deleteAll();
         sessaoRepository.deleteAll();
         pautaRepository.deleteAll();
         associadoRepository.deleteAll();
 
-        // Limpa Redis
+        
         redisTemplate.getConnectionFactory().getConnection().flushDb();
 
-        // Criar pauta
+        
         Pauta pauta = new Pauta();
         pauta.setTitulo("Pauta de Performance Test");
         pauta.setDescricao("Teste de carga com Redis");
         pauta.setStatus(PautaStatus.ABERTA);
         pauta = pautaRepository.save(pauta);
 
-        // Criar sessão
+        
         sessao = new Sessao();
         sessao.setPauta(pauta);
         sessao.setAbertura(LocalDateTime.now());
@@ -100,7 +100,7 @@ class VotoRedisPerformanceTest {
         sessao.setStatus(SessaoStatus.ABERTA);
         sessao = sessaoRepository.save(sessao);
 
-        // Criar associados
+        
         associados = new ArrayList<>(TOTAL_ASSOCIADOS);
         for (int i = 0; i < TOTAL_ASSOCIADOS; i++) {
             Associado a = new Associado();
@@ -114,7 +114,7 @@ class VotoRedisPerformanceTest {
     @Test
     @Timeout(300)
     void stressTestVotosComRedis() throws InterruptedException {
-        // Arrange
+        
         ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
         CountDownLatch latch = new CountDownLatch(associados.size());
         AtomicInteger votosProcessados = new AtomicInteger(0);
@@ -122,7 +122,7 @@ class VotoRedisPerformanceTest {
 
         long start = System.currentTimeMillis();
 
-        // Act
+        
         for (int i = 0; i < associados.size(); i++) {
             final int index = i;
             executor.submit(() -> {
@@ -159,13 +159,13 @@ class VotoRedisPerformanceTest {
             });
         }
 
-        // Aguarda conclusão
+        
         boolean completed = latch.await(2, TimeUnit.MINUTES);
         executor.shutdown();
 
         long end = System.currentTimeMillis();
 
-        // Assert
+        
         assertTrue(completed, "Teste não completou dentro do tempo limite");
 
         long tempoTotal = end - start;
