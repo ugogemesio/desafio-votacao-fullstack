@@ -2,6 +2,7 @@ frontend/build/
 /.idea/
 /*.iml
 *.log
+<<<<<<< Updated upstream
 
 # Backend
 backend/.env
@@ -15,3 +16,8 @@ frontend/dist/
 
 # Outros
 *.log
+=======
+.vite/
+node_modules/
+dist/
+>>>>>>> Stashed changes

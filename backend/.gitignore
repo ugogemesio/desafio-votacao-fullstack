@@ -5,3 +5,4 @@
 /*.iml
 *.log
 ../.env
+/.gradle
