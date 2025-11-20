@@ -130,7 +130,7 @@ class VotoRedisPerformanceTest {
                     String cpf = associados.get(index).getCpf();
                     String chaveRedis = "sessao:" + sessao.getId() + ":cpf:" + cpf;
 
-                    // Verifica no Redis se já votou (operação atômica)
+                    
                     Boolean jaVotou = redisTemplate.opsForValue().setIfAbsent(chaveRedis, "true");
 
                     if (Boolean.FALSE.equals(jaVotou)) {
@@ -138,10 +138,10 @@ class VotoRedisPerformanceTest {
                         return;
                     }
 
-                    // Define expiração para a chave
+                    
                     redisTemplate.expire(chaveRedis, Duration.ofMinutes(65));
 
-                    // CORREÇÃO: Criar o voto diretamente sem usar o mapper
+                    
                     Voto voto = new Voto();
                     voto.setAssociado(associados.get(index));
                     voto.setSessao(sessao);
@@ -152,7 +152,7 @@ class VotoRedisPerformanceTest {
                     votosProcessados.incrementAndGet();
                 } catch (Exception e) {
                     System.err.println("Erro processando voto: " + e.getMessage());
-                    e.printStackTrace(); // Adiciona stack trace completo
+                    e.printStackTrace(); 
                 } finally {
                     latch.countDown();
                 }
