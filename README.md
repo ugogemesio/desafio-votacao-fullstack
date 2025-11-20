@@ -248,8 +248,8 @@ npm run dev
 
 ## Testes & Performance
 
-- **Integração**: Testcontainers (PostgreSQL).
-- **Performance**: Cenário de 100.000 votos processados em ~11s com Redis.
+- **Integração**: Integração simples com redis(branch v0.8).
+- **Performance**: Cenário de 100.000 votos processados em ~11s com Redis(branch v0.8).
 
 ---
 
@@ -259,6 +259,9 @@ npm run dev
 - Segurança
 - Para fins do desafio, todas as chamadas à API são consideradas autorizadas.
 -  Não há autenticação ou controle de acesso implementados, já que a segurança pode ser abstraída conforme orientação do teste.
+-  https://desafio-votacao-fullstack-front-v03.vercel.app/#{var}
+-  #{var} Não sei se é possivel configurar pra conseguir entrar em qualquer url, mas atualmente, só é
+-  possível navegar via fluxo comum, entrando via https://desafio-votacao-fullstack-front-v03.vercel.app e utilizando internamente
 
 
 
