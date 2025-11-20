@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
+    url: jdbc:postgresql://dpg-d4et61rgk3sc73bv2o3g-a.ohio-postgres.render.com:5432/desafiovotacao_1c6z
     username: desafiovotacao
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    password: vPSafQ1klOCqQ11XfglJjFHnLYoOodOG
     driver-class-name: org.postgresql.Driver
 
   jpa:

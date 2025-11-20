@@ -59,6 +59,7 @@ public class SessaoService {
         return sessaoRepository.findById(idSessao)
                 .orElseThrow(() -> new SessaoNotFoundException("Sessão não encontrada"));
     }
+    //mapear
     public List<SessaoPautaDTO> listarSessaoPauta() {
         return sessaoRepository.findAllWithPauta();
     }
@@ -79,26 +80,26 @@ public class SessaoService {
     public SessaoResponseDTO encerrarSessao(Long idSessao) {
         Sessao sessao = buscarEntidadePorId(idSessao);
 
+        if (sessao.getStatus() == SessaoStatus.ENCERRADA) {
+            return sessaoMapper.toDTO(sessao);
+        }
+
         sessao.setStatus(SessaoStatus.ENCERRADA);
         sessao.setFechamento(LocalDateTime.now());
-
-        sessao = sessaoRepository.save(sessao);
-
+        sessaoRepository.save(sessao);
 
         Pauta pauta = pautaRepository.getReferenceById(sessao.getPauta().getId());
         Resultado resultado = resultadoService.calcularResultado(sessao.getId());
         pauta.setResultado(resultado);
 
-
-
-        if(resultado.getStatus()!= ResultadoStatus.EMPATE){
+        if(resultado.getStatus() != ResultadoStatus.EMPATE){
             pauta.setStatus(PautaStatus.DEFINIDA);
-        }else{
+        } else {
             pauta.setStatus(PautaStatus.ABERTA);
         }
 
-        PautaPatchDTO pautaPatchDTO = new PautaPatchDTO(null,null,pauta.getStatus(),resultado);
-        pautaService.atualizarParcial(pauta.getId(),pautaPatchDTO);
+        PautaPatchDTO dto = new PautaPatchDTO(null, null, pauta.getStatus(), resultado);
+        pautaService.atualizarParcial(pauta.getId(), dto);
 
         return sessaoMapper.toDTO(sessao);
     }
