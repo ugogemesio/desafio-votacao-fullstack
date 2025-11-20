@@ -129,7 +129,7 @@ export const PautaPage: React.FC = () => {
         </section>
       </main>
 
-      {/* Modal para criar sessão */}
+      
       <SessaoModal
         isOpen={modalSessao.isOpen}
         onClose={modalSessao.close}
@@ -139,7 +139,7 @@ export const PautaPage: React.FC = () => {
         isLoading={criarSessao.isPending}
       />
 
-      {/* Modal para criar pauta */}
+      
       <PautaModal
         isOpen={modalPauta.isOpen}
         onClose={modalPauta.close}
