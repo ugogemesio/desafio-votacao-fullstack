@@ -146,8 +146,65 @@ Encerramento da Sessão (Scheduler)
       v
 Cálculo e armazenamento do Resultado
 ```
-
 - Exclusão de pautas não implementada para simular auditoria (soft delete).
+
+Tela de login simulada com localstorage e implementando tarefa bônus; 
+
+<img width="1841" height="1501" alt="image" src="https://github.com/user-attachments/assets/8da24575-aec7-4514-b68e-68e0a531c947" />
+
+Caso apareça erro ao processar a colicitação, significa que o back-end estava ligando. Aguarde um pouco para tentar entrar com a tela na página de login;
+
+<img width="1841" height="1501" alt="image" src="https://github.com/user-attachments/assets/81c36291-5062-49f4-b2f5-7f010ea66e76" />
+
+Este comportamento é esperado. Tente novamente clicando em entrar até conseguir cadastrar 
+
+<img width="1841" height="1501" alt="image" src="https://github.com/user-attachments/assets/d81b3a15-0bdf-457a-a0d2-597513bd761d" />
+
+Ao validar CPF positivamente, o usuário é redirecionado ao modal de preenchimento de nome para finalização de cadastro
+
+<img width="1841" height="1501" alt="image" src="https://github.com/user-attachments/assets/48d03d5e-1f5e-4f61-9691-2a805a1bb775" />
+
+Assim que logado no sistema, o usuário entra na tela de pautas onde é possível criar pauta e criar sessão;
+
+A regra de negócio de pautas é: 
+Uma pauta está aberta quando há empate de votação e não há sessões ocorrendo. 
+
+Caso uma sessão termine em empate, a pauta pode ter novas sessões abertas.
+
+Exclusão e edição de pautas não implementada para simular auditoria (soft delete) e para simplificação do projeto no caso da edição.
+
+<img width="1900" height="1801" alt="image" src="https://github.com/user-attachments/assets/0f7570a6-bb60-4cdc-8e99-accb267a5f7f" />
+
+<img width="1900" height="1801" alt="image" src="https://github.com/user-attachments/assets/69374eda-dcfa-4969-89bb-66cbc984d022" />
+
+<img width="1900" height="1801" alt="image" src="https://github.com/user-attachments/assets/94144c8e-6b1d-44d9-89f6-5b1e69dab768" />
+
+<img width="1900" height="1801" alt="image" src="https://github.com/user-attachments/assets/18b29cb4-327e-45f9-b9e4-b1903ca3d6ec" />
+
+Ao clicar em Sessões de votação no header, é possível criar nova sessão com pautas com status em aberto, ver sessões criadas e caso haja sessões em votação, é possível votar nas sessões.
+
+<img width="1900" height="1801" alt="image" src="https://github.com/user-attachments/assets/c0b5accf-4dde-47ae-a941-bd9a22b30256" />
+
+<img width="1900" height="1801" alt="image" src="https://github.com/user-attachments/assets/71f9412d-62ab-40db-81de-7c9cfa972cb7" />
+
+<img width="1900" height="1801" alt="image" src="https://github.com/user-attachments/assets/0043d25d-f36c-49a8-84e2-9ecc87bd66f8" />
+
+
+
+<img width="1900" height="1801" alt="image" src="https://github.com/user-attachments/assets/07402e9a-e546-4c7c-8d7e-443480e1b86b" />
+
+
+<img width="1900" height="1801" alt="image" src="https://github.com/user-attachments/assets/042bf68a-77b5-4662-aa53-5e59159219c9" />
+
+Foi implementada verificação do back até o front que impede o mesmo associado em votar duas vezes na sessão e verificação de término de sessão;
+
+<img width="1900" height="1801" alt="image" src="https://github.com/user-attachments/assets/c13edaf2-9749-492d-af6e-76d1484f274b" />
+
+<img width="1900" height="1801" alt="image" src="https://github.com/user-attachments/assets/6bfdc55f-c2d9-4ba5-9b47-0832b84e5957" />
+
+<img width="1900" height="1801" alt="image" src="https://github.com/user-attachments/assets/f5169bf3-ea1e-4814-b4ef-65d682979b08" />
+
+
 
 ---
 
