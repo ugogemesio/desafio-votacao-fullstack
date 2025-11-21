@@ -204,8 +204,6 @@ Foi implementada verificação do back até o front que impede o mesmo associado
 
 <img width="1900" height="1801" alt="image" src="https://github.com/user-attachments/assets/f5169bf3-ea1e-4814-b4ef-65d682979b08" />
 
-
-
 ---
 
 ## Execução do Projeto
@@ -229,13 +227,25 @@ npm install
 npm run dev
 ```
 
+### Documentação da API (Swagger)
+<img width="3830" height="1915" alt="image" src="https://github.com/user-attachments/assets/7430ec60-f61e-4dc3-b06f-b5c36af8a944" />
+
+A aplicação possui documentação interativa da API via Swagger, permitindo explorar todos os endpoints, parâmetros e respostas diretamente pelo navegador.
+
+| Ambiente        | URL                                            |
+| --------------- | ---------------------------------------------- |
+| Local           | `http://localhost:8080/swagger-ui.html`        |
+| Deploy (Render) | `https://desafio-votacao-fullstack-7qd4.onrender.com/swagger-ui/index.html` |
+
+Também é possível acessar o JSON da API em /v3/api-docs.
+Incluí o Swagger no deploy para que possam explorar e testar as APIs facilmente, sem precisar rodar nada localmente.
+
 
 ### Acesso
-- Swagger: `http://localhost:8080/api/v1/swagger-ui.html`
+- Swagger: `http://localhost:8080/swagger-ui.html`
 - Frontend: `http://localhost:5173`
 
 ---
-
 ## Decisões Técnicas Relevantes
 
 - **DTOs + MapStruct**: Evitam exposição direta das entidades e simplificam serialização.
