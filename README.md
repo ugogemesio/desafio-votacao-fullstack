@@ -252,8 +252,15 @@ Incluí o Swagger no deploy para que possam explorar e testar as APIs facilmente
 - **DTOs + MapStruct**: Evitam exposição direta das entidades e simplificam serialização.
 - **Redis**: Cache e performance para grandes volumes de votos.
 - **React Query**: Gerenciamento eficiente de cache e requisições HTTP.
-- **Eventos e Scheduler**: Encerramento de sessões desacoplado do fluxo principal.
 - **Soft Delete**: Preserva histórico de votações.
+ - **Eventos e Scheduler**: Automatizam o encerramento das sessões de votação, garantindo que resultados sejam calculados no horário certo, mesmo que a aplicação reinicie ou haja sessões abertas esquecidas.
+ Quando uma sessão é criada, ela é agendada para encerrar automaticamente no horário definido.
+
+Se a aplicação reiniciar, todas as sessões abertas são reagendadas para não perder o controle do tempo.
+
+Um monitoramento periódico verifica se há sessões que passaram do horário de encerramento e as finaliza.
+
+Ao encerrar, o sistema calcula e armazena os resultados automaticamente.
 
 ---
 
