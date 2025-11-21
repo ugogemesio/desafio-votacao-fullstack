@@ -18,10 +18,11 @@ Sistema de votação online para cooperativas, permitindo que associados cadastr
 5. [Branches](#arquitetura-do-sistema1.1)
 6. [Fluxo de Uso](#fluxo-de-uso)
 7. [Execução do Projeto](#execucao-do-projeto)
-8. [Decisões Técnicas Relevantes](#decisoes-tecnicas-relevantes)
-9. [Testes & Performance](#testes--performance)
-10. [Limitações Conhecidas](#limitacoes-conhecidas)
-11. [Contribuição](#contribuicao)
+8. [Documentação da API (Swagger)](#documentacao-swagger)
+9. [Decisões Técnicas Relevantes](#decisoes-tecnicas-relevantes)
+10. [Testes & Performance](#testes--performance)
+11. [Limitações Conhecidas](#limitacoes-conhecidas)
+12. [Contribuição](#contribuicao)
 
 ---
 
