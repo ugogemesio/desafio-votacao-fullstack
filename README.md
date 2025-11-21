@@ -18,10 +18,11 @@ Sistema de votação online para cooperativas, permitindo que associados cadastr
 5. [Branches](#arquitetura-do-sistema1.1)
 6. [Fluxo de Uso](#fluxo-de-uso)
 7. [Execução do Projeto](#execucao-do-projeto)
-8. [Decisões Técnicas Relevantes](#decisoes-tecnicas-relevantes)
-9. [Testes & Performance](#testes--performance)
-10. [Limitações Conhecidas](#limitacoes-conhecidas)
-11. [Contribuição](#contribuicao)
+8. [Documentação da API (Swagger)](#documentacao-swagger)
+9. [Decisões Técnicas Relevantes](#decisoes-tecnicas-relevantes)
+10. [Testes & Performance](#testes--performance)
+11. [Limitações Conhecidas](#limitacoes-conhecidas)
+12. [Contribuição](#contribuicao)
 
 ---
 
@@ -204,8 +205,6 @@ Foi implementada verificação do back até o front que impede o mesmo associado
 
 <img width="1900" height="1801" alt="image" src="https://github.com/user-attachments/assets/f5169bf3-ea1e-4814-b4ef-65d682979b08" />
 
-
-
 ---
 
 ## Execução do Projeto
@@ -229,13 +228,25 @@ npm install
 npm run dev
 ```
 
+### Documentação da API (Swagger)
+<img width="3830" height="1915" alt="image" src="https://github.com/user-attachments/assets/7430ec60-f61e-4dc3-b06f-b5c36af8a944" />
+
+A aplicação possui documentação interativa da API via Swagger, permitindo explorar todos os endpoints, parâmetros e respostas diretamente pelo navegador.
+
+| Ambiente        | URL                                            |
+| --------------- | ---------------------------------------------- |
+| Local           | `http://localhost:8080/swagger-ui.html`        |
+| Deploy (Render) | `https://desafio-votacao-fullstack-7qd4.onrender.com/swagger-ui/index.html` |
+
+Também é possível acessar o JSON da API em /v3/api-docs.
+Incluí o Swagger no deploy para que possam explorar e testar as APIs facilmente, sem precisar rodar nada localmente.
+
 
 ### Acesso
-- Swagger: `http://localhost:8080/api/v1/swagger-ui.html`
+- Swagger: `http://localhost:8080/swagger-ui.html`
 - Frontend: `http://localhost:5173`
 
 ---
-
 ## Decisões Técnicas Relevantes
 
 - **DTOs + MapStruct**: Evitam exposição direta das entidades e simplificam serialização.
@@ -248,8 +259,8 @@ npm run dev
 
 ## Testes & Performance
 
-- **Integração**: Testcontainers (PostgreSQL).
-- **Performance**: Cenário de 100.000 votos processados em ~11s com Redis.
+- **Integração**: Integração simples com redis(branch v0.8).
+- **Performance**: Cenário de 100.000 votos processados em ~11s com Redis(branch v0.8).
 
 ---
 
@@ -259,6 +270,9 @@ npm run dev
 - Segurança
 - Para fins do desafio, todas as chamadas à API são consideradas autorizadas.
 -  Não há autenticação ou controle de acesso implementados, já que a segurança pode ser abstraída conforme orientação do teste.
+-  https://desafio-votacao-fullstack-front-v03.vercel.app/#{var}
+-  #{var} Não sei se é possivel configurar pra conseguir entrar em qualquer url, mas atualmente, só é
+-  possível navegar via fluxo comum, entrando via https://desafio-votacao-fullstack-front-v03.vercel.app e utilizando internamente
 
 
 
