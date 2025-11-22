@@ -16,20 +16,11 @@ public interface SessaoRepository extends JpaRepository<Sessao, Long> {
     Optional<Sessao> findByPautaId(Long pautaId);
 
     @Query("""
-    SELECT new com.dbserver.ugo.votacao.sessao.SessaoPautaDTO(
-        s.id,
-        s.abertura,
-        s.fechamento,
-        s.duracaoMinutos,
-        s.pauta.id,
-        s.status,
-        s.pauta.titulo,
-        s.pauta.descricao
-    )
-    FROM Sessao s
-    JOIN s.pauta p
-""")
-    List<SessaoPautaDTO> findAllWithPauta();
+        SELECT s FROM Sessao s
+        JOIN FETCH s.pauta
+    """)
+    List<Sessao> findAllWithPauta();
+
     List<Sessao> findByStatus(SessaoStatus status);
 
     @Query("""

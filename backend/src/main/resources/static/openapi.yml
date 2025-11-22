@@ -1,0 +1,797 @@
+openapi: 3.0.3
+info:
+  title: Sistema de Votação API
+  description: API para gerenciamento de votações, pautas, sessões e associados
+  version: 1.0.0
+  contact:
+    name: Ugo Rangel Gemesio
+    email: ugo.gemesio@gmail.com
+
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Servidor de Desenvolvimento
+  - url: https://desafio-votacao-fullstack-7qd4.onrender.com/api/v1
+    description: Servidor de Produção
+
+paths:
+  # VOTOS
+  /votos:
+    post:
+      summary: Registrar um voto
+      description: Registra um voto em uma sessão de votação
+      tags:
+        - Votos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VotoCreateDTO'
+      responses:
+        '200':
+          description: Voto registrado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VotoResponseDTO'
+        '400':
+          description: Dados inválidos ou erro de negócio
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor
+
+  /votos/{id}:
+    get:
+      summary: Buscar voto por ID
+      description: Retorna um voto específico pelo seu ID
+      tags:
+        - Votos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: ID do voto
+      responses:
+        '200':
+          description: Voto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VotoResponseDTO'
+        '404':
+          description: Voto não encontrado
+        '500':
+          description: Erro interno do servidor
+
+  # LOGIN
+  /login:
+    post:
+      summary: Realizar login
+      description: Realiza login de um associado pelo CPF
+      tags:
+        - Autenticação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestDTO'
+      responses:
+        '200':
+          description: Login realizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponseDTO'
+        '500':
+          description: Erro interno do servidor
+
+  # ASSOCIADOS
+  /associados:
+    post:
+      summary: Criar um associado
+      description: Cria um novo associado no sistema
+      tags:
+        - Associados
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssociadoCreateDTO'
+      responses:
+        '201':
+          description: Associado criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssociadoResponseDTO'
+        '400':
+          description: Dados inválidos
+        '500':
+          description: Erro interno do servidor
+
+    get:
+      summary: Listar todos os associados
+      description: Retorna uma lista com todos os associados
+      tags:
+        - Associados
+      responses:
+        '200':
+          description: Lista de associados retornada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AssociadoResponseDTO'
+        '500':
+          description: Erro interno do servidor
+
+  /associados/{id}:
+    get:
+      summary: Buscar associado por ID
+      description: Retorna um associado específico pelo seu ID
+      tags:
+        - Associados
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: ID do associado
+      responses:
+        '200':
+          description: Associado encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssociadoResponseDTO'
+        '404':
+          description: Associado não encontrado
+        '500':
+          description: Erro interno do servidor
+
+    put:
+      summary: Atualizar associado
+      description: Atualiza todos os dados de um associado
+      tags:
+        - Associados
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssociadoPutDTO'
+      responses:
+        '200':
+          description: Associado atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssociadoResponseDTO'
+        '400':
+          description: Dados inválidos
+        '404':
+          description: Associado não encontrado
+        '500':
+          description: Erro interno do servidor
+
+    patch:
+      summary: Atualizar associado parcialmente
+      description: Atualiza parcialmente os dados de um associado
+      tags:
+        - Associados
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssociadoPatchDTO'
+      responses:
+        '200':
+          description: Associado atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssociadoResponseDTO'
+        '400':
+          description: Dados inválidos
+        '404':
+          description: Associado não encontrado
+        '500':
+          description: Erro interno do servidor
+
+    delete:
+      summary: Excluir associado
+      description: Exclui um associado específico
+      tags:
+        - Associados
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Associado excluído com sucesso
+        '404':
+          description: Associado não encontrado
+        '500':
+          description: Erro interno do servidor
+
+  /associados/cpf/{cpf}:
+    get:
+      summary: Buscar associado por CPF
+      description: Retorna um associado específico pelo seu CPF
+      tags:
+        - Associados
+      parameters:
+        - name: cpf
+          in: path
+          required: true
+          schema:
+            type: string
+          description: CPF do associado
+      responses:
+        '200':
+          description: Associado encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssociadoResponseDTO'
+        '404':
+          description: Associado não encontrado
+        '500':
+          description: Erro interno do servidor
+
+  # PAUTAS
+  /pautas:
+    post:
+      summary: Criar uma nova pauta
+      description: Cria uma nova pauta para votação
+      tags:
+        - Pautas
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PautaCreateDTO'
+      responses:
+        '201':
+          description: Pauta criada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PautaResponseDTO'
+        '400':
+          description: Dados inválidos
+        '500':
+          description: Erro interno do servidor
+
+    get:
+      summary: Listar todas as pautas
+      description: Retorna uma lista com todas as pautas
+      tags:
+        - Pautas
+      responses:
+        '200':
+          description: Lista de pautas retornada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PautaResponseDTO'
+        '500':
+          description: Erro interno do servidor
+
+  /pautas/{id}:
+    get:
+      summary: Buscar pauta por ID
+      description: Retorna uma pauta específica pelo seu ID
+      tags:
+        - Pautas
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: ID da pauta
+      responses:
+        '200':
+          description: Pauta encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PautaResponseDTO'
+        '404':
+          description: Pauta não encontrada
+        '500':
+          description: Erro interno do servidor
+
+    patch:
+      summary: Atualizar pauta parcialmente
+      description: Atualiza parcialmente os dados de uma pauta
+      tags:
+        - Pautas
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PautaPatchDTO'
+      responses:
+        '200':
+          description: Pauta atualizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PautaResponseDTO'
+        '400':
+          description: Dados inválidos
+        '404':
+          description: Pauta não encontrada
+        '500':
+          description: Erro interno do servidor
+
+    delete:
+      summary: Excluir pauta
+      description: Exclui uma pauta específica
+      tags:
+        - Pautas
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Pauta excluída com sucesso
+        '400':
+          description: Não é permitido excluir pauta com sessões
+        '404':
+          description: Pauta não encontrada
+        '500':
+          description: Erro interno do servidor
+
+  /pautas/status/{status}:
+    get:
+      summary: Listar pautas por status
+      description: Retorna pautas filtradas por status
+      tags:
+        - Pautas
+      parameters:
+        - name: status
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/PautaStatus'
+          description: Status das pautas a serem filtradas
+      responses:
+        '200':
+          description: Lista de pautas retornada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PautaResponseDTO'
+        '500':
+          description: Erro interno do servidor
+
+  # SESSÕES
+  /pautas/{id}/sessoes:
+    post:
+      summary: Criar sessão para pauta
+      description: Cria uma nova sessão de votação para uma pauta
+      tags:
+        - Sessões
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: ID da pauta
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessaoCreateDTO'
+      responses:
+        '201':
+          description: Sessão criada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessaoResponseDTO'
+        '400':
+          description: Dados inválidos ou erro de negócio
+        '404':
+          description: Pauta não encontrada
+        '500':
+          description: Erro interno do servidor
+
+  /sessoes:
+    get:
+      summary: Listar todas as sessões
+      description: Retorna uma lista com todas as sessões
+      tags:
+        - Sessões
+      responses:
+        '200':
+          description: Lista de sessões retornada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SessaoResponseDTO'
+        '500':
+          description: Erro interno do servidor
+
+  /sessoes/{id}:
+    get:
+      summary: Buscar sessão por ID
+      description: Retorna uma sessão específica pelo seu ID
+      tags:
+        - Sessões
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: ID da sessão
+      responses:
+        '200':
+          description: Sessão encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessaoResponseDTO'
+        '404':
+          description: Sessão não encontrada
+        '500':
+          description: Erro interno do servidor
+
+    post:
+      summary: Encerrar sessão
+      description: Encerra uma sessão de votação e calcula o resultado
+      tags:
+        - Sessões
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Sessão encerrada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessaoResponseDTO'
+        '404':
+          description: Sessão não encontrada
+        '500':
+          description: Erro interno do servidor
+
+  /sessoesPautas:
+    get:
+      summary: Listar sessões com informações da pauta
+      description: Retorna sessões incluindo dados da pauta relacionada
+      tags:
+        - Sessões
+      responses:
+        '200':
+          description: Lista de sessões com pautas retornada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SessaoPautaDTO'
+        '500':
+          description: Erro interno do servidor
+
+components:
+  schemas:
+    # VOTOS
+    VotoCreateDTO:
+      type: object
+      required:
+        - idSessao
+        - cpfAssociado
+        - valor
+      properties:
+        idSessao:
+          type: integer
+          format: int64
+          example: 1
+        cpfAssociado:
+          type: string
+          example: "12345678900"
+        valor:
+          type: boolean
+          example: true
+          description: "true para SIM, false para NÃO"
+
+    VotoResponseDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        idSessao:
+          type: integer
+          format: int64
+          example: 1
+        cpfAssociado:
+          type: string
+          example: "12345678900"
+        valor:
+          type: boolean
+          example: true
+        dataVoto:
+          type: string
+          format: date-time
+          example: "2023-10-01T10:00:00Z"
+
+    # LOGIN
+    LoginRequestDTO:
+      type: object
+      required:
+        - cpf
+      properties:
+        cpf:
+          type: string
+          example: "12345678900"
+
+    LoginResponseDTO:
+      type: object
+      properties:
+        cpf:
+          type: string
+          example: "12345678900"
+        status:
+          $ref: '#/components/schemas/LoginStatus'
+
+    LoginStatus:
+      type: string
+      enum:
+        - ABLE_TO_VOTE
+        - UNABLE_TO_VOTE
+      example: "ABLE_TO_VOTE"
+
+    # ASSOCIADOS
+    AssociadoCreateDTO:
+      type: object
+      required:
+        - nome
+        - cpf
+      properties:
+        nome:
+          type: string
+          example: "João Silva"
+        cpf:
+          type: string
+          example: "12345678900"
+
+    AssociadoResponseDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        nome:
+          type: string
+          example: "João Silva"
+        cpf:
+          type: string
+          example: "12345678900"
+        dataCriacao:
+          type: string
+          format: date-time
+          example: "2023-10-01T10:00:00Z"
+
+    AssociadoPutDTO:
+      type: object
+      required:
+        - nome
+        - cpf
+      properties:
+        nome:
+          type: string
+          example: "João Silva Atualizado"
+        cpf:
+          type: string
+          example: "12345678900"
+
+    AssociadoPatchDTO:
+      type: object
+      properties:
+        nome:
+          type: string
+          example: "João Silva Atualizado"
+        cpf:
+          type: string
+          example: "12345678900"
+
+    # PAUTAS
+    PautaCreateDTO:
+      type: object
+      required:
+        - titulo
+        - descricao
+      properties:
+        titulo:
+          type: string
+          example: "Pauta de Teste"
+        descricao:
+          type: string
+          example: "Descrição detalhada da pauta de teste"
+
+    PautaResponseDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        titulo:
+          type: string
+          example: "Pauta de Teste"
+        descricao:
+          type: string
+          example: "Descrição detalhada da pauta de teste"
+        status:
+          $ref: '#/components/schemas/PautaStatus'
+        dataCriacao:
+          type: string
+          format: date-time
+          example: "2023-10-01T10:00:00Z"
+
+    PautaPatchDTO:
+      type: object
+      properties:
+        titulo:
+          type: string
+          example: "Pauta Atualizada"
+        descricao:
+          type: string
+          example: "Nova descrição da pauta"
+        status:
+          $ref: '#/components/schemas/PautaStatus'
+
+    PautaStatus:
+      type: string
+      enum:
+        - ABERTA
+        - VOTANDO
+        - DEFINIDA
+      example: "ABERTA"
+
+    # SESSÕES
+    SessaoCreateDTO:
+      type: object
+      properties:
+        duracaoMinutos:
+          type: integer
+          minimum: 1
+          example: 60
+          description: Duração em minutos (opcional, padrão 1 minuto)
+
+    SessaoResponseDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        abertura:
+          type: string
+          format: date-time
+          example: "2023-10-01T10:00:00Z"
+        fechamento:
+          type: string
+          format: date-time
+          example: "2023-10-01T11:00:00Z"
+        duracaoMinutos:
+          type: integer
+          example: 60
+        status:
+          $ref: '#/components/schemas/SessaoStatus'
+        idPauta:
+          type: integer
+          format: int64
+          example: 1
+
+    SessaoPautaDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        abertura:
+          type: string
+          format: date-time
+          example: "2023-10-01T10:00:00Z"
+        fechamento:
+          type: string
+          format: date-time
+          example: "2023-10-01T11:00:00Z"
+        duracaoMinutos:
+          type: integer
+          example: 60
+        idPauta:
+          type: integer
+          format: int64
+          example: 1
+        status:
+          $ref: '#/components/schemas/SessaoStatus'
+        tituloPauta:
+          type: string
+          example: "Título da Pauta"
+        descricaoPauta:
+          type: string
+          example: "Descrição da Pauta"
+
+    SessaoStatus:
+      type: string
+      enum:
+        - ABERTA
+        - ENCERRADA
+      example: "ABERTA"
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Mensagem de erro específica"

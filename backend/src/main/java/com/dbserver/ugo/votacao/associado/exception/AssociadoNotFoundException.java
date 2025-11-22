@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 **/
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class AssociadoNotFoundException extends RuntimeException {
+    public AssociadoNotFoundException(String cpf) {
+        super("Associado não encontrado: " + cpf);
+    }
     public AssociadoNotFoundException(Long id) {
         super("Associado não encontrado: " + id);
-    }
-
-    public AssociadoNotFoundException(String message) {
-        super(message);
     }
 }

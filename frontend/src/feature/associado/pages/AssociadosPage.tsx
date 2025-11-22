@@ -1,3 +1,4 @@
+import GaugeMockTest from "../../molecules/gauge/GaugeMockTest";
 import { useAssociados } from "../hooks/useAssociados";
 useAssociados
 
@@ -18,7 +19,8 @@ const AssociadosPage = () => {
           {associados.map((a) => (
             <li key={a.id}>
               {a.nome} — {a.cpf} - {a.id}
-              
+                    <GaugeMockTest></GaugeMockTest>
+
               <button>Deletar</button>
               <button>Editar</button>
             </li>

@@ -129,7 +129,6 @@ export const SessaoPage: React.FC = () => {
         </section>
       </main>
 
-      {/* Modal de votação */}
       <VotoModal
         isOpen={votoModal.isOpen}
         onClose={handleCloseVotoModal}
