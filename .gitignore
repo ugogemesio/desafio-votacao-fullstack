@@ -29,7 +29,6 @@ backend/.env
 backend/.gradle/
 backend/build/
 backend/*.hprof
-backend/src/main/resources/application.yml
 
 # =====================
 # Frontend - Node / Vite
