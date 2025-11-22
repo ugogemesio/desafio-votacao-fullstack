@@ -229,9 +229,16 @@ npm run dev
 ```
 
 ### Documentação da API (Swagger)
-<img width="3830" height="1915" alt="image" src="https://github.com/user-attachments/assets/7430ec60-f61e-4dc3-b06f-b5c36af8a944" />
+
 
 A aplicação possui documentação interativa da API via Swagger, permitindo explorar todos os endpoints, parâmetros e respostas diretamente pelo navegador.
+<img width="4075" height="2147" alt="image" src="https://github.com/user-attachments/assets/570408a2-7cf0-4539-b605-68301963d31f" />
+
+Caso não esteja conseguindo requisitar os endpoints, verifique no campo a seguir:
+<img width="1968" height="163" alt="image" src="https://github.com/user-attachments/assets/e4616890-7923-4651-988d-4f9a917a0fc0" />
+
+
+   
 
 | Ambiente        | URL                                            |
 | --------------- | ---------------------------------------------- |
