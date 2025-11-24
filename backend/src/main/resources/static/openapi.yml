@@ -695,6 +695,8 @@ components:
           type: string
           format: date-time
           example: "2023-10-01T10:00:00Z"
+        resultado:
+          $ref: '#/components/schemas/ResultadoDTO'
 
     PautaPatchDTO:
       type: object
@@ -750,6 +752,8 @@ components:
           type: integer
           format: int64
           example: 1
+        resultado:
+          $ref: '#/components/schemas/ResultadoDTO'
 
     SessaoPautaDTO:
       type: object
@@ -795,3 +799,21 @@ components:
         message:
           type: string
           example: "Mensagem de erro específica"
+
+
+    ResultadoDTO:
+      type: object
+      properties:
+        sim:
+          type: integer
+          example: 6
+        nao:
+          type: integer
+          example: 1
+        status:
+          type: string
+          enum:
+            - APROVADO
+            - REPROVADO
+            - EMPATE
+          example: "APROVADO"
