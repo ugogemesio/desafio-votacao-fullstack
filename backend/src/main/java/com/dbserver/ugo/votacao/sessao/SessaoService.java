@@ -132,10 +132,9 @@ public class SessaoService {
 
         atualizarParcial(sessao.getId(), sessaoPatchDTO);
         logger.info("Sessão ID: {} encerrada. Resultado: {}", id, resultado.getStatus());
-        sessaoRepository.save(sessao);
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Pauta pauta = pautaRepository.getReferenceById(sessao.getPauta().getId());
-        //pauta.setResultado(resultado);
+
 
         if(resultado.getStatus() != ResultadoStatus.EMPATE){
           if(resultado.getSim()> resultado.getNao()){
@@ -147,7 +146,7 @@ public class SessaoService {
             pauta.setStatus(PautaStatus.ABERTA);
         }
 
-        PautaPatchDTO patchDTO = new PautaPatchDTO(null, null, pauta.getStatus());
+        PautaPatchDTO patchDTO = new PautaPatchDTO(null, null, pauta.getStatus(),resultado);
         pautaService.atualizarParcial(pauta.getId(), patchDTO);
         return sessaoMapper.toDTO(sessao);
     }
