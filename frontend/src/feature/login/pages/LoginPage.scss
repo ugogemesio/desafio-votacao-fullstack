@@ -1,5 +1,6 @@
-@import '../../../styles/variables';
-@import '../../../styles/mixins';
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
 
 .login-page {
   min-height: 100vh;

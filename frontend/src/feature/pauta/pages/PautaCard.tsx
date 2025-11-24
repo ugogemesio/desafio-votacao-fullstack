@@ -19,8 +19,10 @@ export const PautaCard: React.FC<PautaCardProps> = ({
   const statusMap = {
     ABERTA: { label: 'Aberta', className: 'pauta-card__status--aberta' },
     VOTANDO: { label: 'Em Votação', className: 'pauta-card__status--votacao' },
-    DEFINIDA: { label: 'Fechada', className: 'pauta-card__status--fechada' }
+    APROVADA: { label: 'Aprovada', className: 'pauta-card__status--aprovada' },
+    REPROVADA: { label: 'Reprovada', className: 'pauta-card__status--reprovada' }
   };
+
 
   const statusInfo = statusMap[pauta.status] || {
     label: pauta.status,
@@ -48,7 +50,7 @@ export const PautaCard: React.FC<PautaCardProps> = ({
             Criada em: {new Date(pauta.dataCriacao).toLocaleDateString('pt-BR')}
           </span>
 
-          {pauta.status === 'DEFINIDA' && pauta.resultado && (
+          {(pauta.status === 'APROVADA' || pauta.status === 'REPROVADA') && pauta.resultado && (
             <div className="pauta-card__resultado">
               <Gauge
                 sim={pauta.resultado.sim}
@@ -56,6 +58,7 @@ export const PautaCard: React.FC<PautaCardProps> = ({
               />
             </div>
           )}
+
         </div>
 
         {pauta.status === 'ABERTA' && (

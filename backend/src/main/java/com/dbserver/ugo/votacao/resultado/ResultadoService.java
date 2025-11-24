@@ -28,11 +28,11 @@ public class ResultadoService {
 
         Sessao sessao = sessaoRepository.getReferenceById(sessaoId);
 
-        Pauta pauta = pautaRepository.findById(sessao.getPauta().getId())
-                .orElseThrow(() -> {
-                    logger.error("Pauta não encontrada para sessão ID: {}", sessaoId);
-                    return new PautaNotFoundException(sessao.getPauta().getId());
-                });
+//        Pauta pauta = pautaRepository.findById(sessao.getPauta().getId())
+//                .orElseThrow(() -> {
+//                    logger.error("Pauta não encontrada para sessão ID: {}", sessaoId);
+//                    return new PautaNotFoundException(sessao.getPauta().getId());
+//                });
 
         long sim = votoRepository.countBySessaoIdAndOpcao(sessao.getId(), VotoOpcao.SIM);
         long nao = votoRepository.countBySessaoIdAndOpcao(sessao.getId(), VotoOpcao.NAO);
@@ -40,8 +40,11 @@ public class ResultadoService {
         logger.debug("Resultado da sessão {} - SIM: {}, NÃO: {}", sessaoId, sim, nao);
 
         Resultado resultado = new Resultado(sim, nao);
-        pauta.setResultado(resultado);
-        pautaRepository.save(pauta);
+
+//        sessao.setResultado(resultado);
+//        sessaoRepository.save(sessao);
+      //  pauta.setResultado(resultado);
+ //       pautaRepository.save(pauta);
 
         logger.info("Resultado calculado para sessão {}: {}", sessaoId, resultado.getStatus());
         return resultado;

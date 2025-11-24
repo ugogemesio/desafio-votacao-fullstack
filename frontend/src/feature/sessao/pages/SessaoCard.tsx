@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from '../../atoms/Card';
 import { Button } from '../../atoms/Button';
+import { Gauge } from '../../molecules/gauge/Gauge';
 import './SessaoCard.scss';
 import type { SessaoPautaDTO } from '../types/sessao';
 
@@ -76,6 +77,15 @@ export const SessaoCard: React.FC<SessaoCardProps> = ({
           )}
         </div>
       </div>
+
+                {sessao.status === 'ENCERRADA' && (
+                  <div className="pauta-card__resultado">
+                    <Gauge
+                      sim={sessao.resultado.sim}
+                      nao={sessao.resultado.nao}
+                    />
+                  </div>
+                )}
     </Card>
   );
 };

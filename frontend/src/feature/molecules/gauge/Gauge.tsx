@@ -1,44 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 
 interface GaugeProps {
     sim: number;
     nao: number;
     size?: number;
+    strokeWidth?: number;
 }
 
-export const Gauge: React.FC<GaugeProps> = ({ sim, nao, size = 120 }) => {
+export const Gauge: React.FC<GaugeProps> = ({
+    sim,
+    nao,
+    size = 120,
+    strokeWidth = 10,
+}) => {
     const total = sim + nao;
-    const percentage = total > 0 ? (sim / total) * 100 : 0;
 
-    const strokeWidth = 10;
+    const simPercentage = total > 0 ? (sim / total) * 100 : 0;
+    const naoPercentage = total > 0 ? (nao / total) * 100 : 0;
+
     const radius = (size - strokeWidth) / 2;
     const circumference = 2 * Math.PI * radius;
 
-    const [offset, setOffset] = useState(circumference);
+    // comprimento em "pixels" do arco
+    const simLen = (simPercentage / 100) * circumference;
+    const naoLen = (naoPercentage / 100) * circumference;
 
-    useEffect(() => {
-        const progress = circumference - (percentage / 100) * circumference;
-        setOffset(progress);
-    }, [percentage, circumference]);
+    // offset para posicionar o arco de "não" logo após o arco de "sim"
+    // rotacionamos -90deg para começar no topo, então deslocamento aqui posiciona corretamente
+    const naoOffset = circumference - simLen; // posiciona o início do arco de "não" depois do fim do "sim"
 
-    const getGaugeColor = () => {
-        if (total === 0) return '#adb5bd';
-        if (percentage > 60) return '#28a745';
-        if (percentage < 40) return '#dc3545';
-        return '#ffc107';
-    };
-
-    const getGaugeLabel = () => {
-        if (total === 0) return 'Sem votos';
-        if (percentage > 60) return 'Aprovada';
-        if (percentage < 40) return 'Rejeitada';
-        return 'Empate';
-    };
+    const majority = sim === nao ? 'EMPATE' : sim > nao ? 'SIM' : 'NAO';
 
     return (
-        <div className="gauge-container">
+        <div className="gauge-container" style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center' }}>
             <svg width={size} height={size}>
-                {/* Fundo */}
+
+                {/* Fundo (círculo base) */}
                 <circle
                     cx={size / 2}
                     cy={size / 2}
@@ -48,31 +45,51 @@ export const Gauge: React.FC<GaugeProps> = ({ sim, nao, size = 120 }) => {
                     fill="none"
                 />
 
-                {/* Progresso */}
+                {/* SIM (verde) - desenhado primeiro */}
                 <circle
                     cx={size / 2}
                     cy={size / 2}
                     r={radius}
-                    stroke={getGaugeColor()}
+                    stroke="#28a745"
                     strokeWidth={strokeWidth}
                     fill="none"
-                    strokeDasharray={circumference}
-                    strokeDashoffset={offset}
-                    strokeLinecap="round"
+                    strokeLinecap="butt"
+
+                    // arco visível = simLen, resto invisível
+                    strokeDasharray={`${simLen} ${circumference - simLen}`}
+                    // começamos no topo por causa da rotação; offset 0 faz começar no topo
+                    strokeDashoffset={0}
                     transform={`rotate(-90 ${size / 2} ${size / 2})`}
-                    className="gauge-progress"
+                    className="gauge-progress-sim"
                 />
 
-                {/* Percentual */}
+                {/* NÃO (vermelho) - desenhado depois e posicionado logo após o SIM */}
+                <circle
+                    cx={size / 2}
+                    cy={size / 2}
+                    r={radius}
+                    stroke="#dc3545"
+                    strokeWidth={strokeWidth}
+                    fill="none"
+                    strokeLinecap="butt"
+
+                    strokeDasharray={`${naoLen} ${circumference - naoLen}`}
+                    // desloca o início do arco de "não" para começar onde o "sim" terminou
+                    strokeDashoffset={naoOffset}
+                    transform={`rotate(-90 ${size / 2} ${size / 2})`}
+                    className="gauge-progress-nao"
+                />
+
+                {/* Percentual da maioria no centro */}
                 <text
                     x="50%"
                     y="45%"
                     textAnchor="middle"
-                    fontSize="20"
+                    fontSize={20}
                     fontWeight="bold"
-                    fill={getGaugeColor()}
+                    fill={majority === 'SIM' ? '#28a745' : majority === 'NAO' ? '#dc3545' : '#ffc107'}
                 >
-                    {total > 0 ? `${Math.round(percentage)}%` : '—'}
+                    {total > 0 ? `${Math.round(Math.max(simPercentage, naoPercentage))}%` : '—'}
                 </text>
 
                 {/* Label */}
@@ -80,25 +97,27 @@ export const Gauge: React.FC<GaugeProps> = ({ sim, nao, size = 120 }) => {
                     x="50%"
                     y="65%"
                     textAnchor="middle"
-                    fontSize="12"
+                    fontSize={12}
                     fill="#6c757d"
                 >
-                    {getGaugeLabel()}
+                    {total === 0 ? 'Sem votos' : majority === 'EMPATE' ? 'Empate' : majority === 'SIM' ? 'Aprovada' : 'Rejeitada'}
                 </text>
-
             </svg>
+
+            {/* Legenda */}
             {total > 0 && (
-                <text
-                    x="50%"
-                    y="72%"
-                    textAnchor="middle"
-                    fontSize="11"
-                    fill="#495057"
-                >
-                    Sim: {sim} | Não: {nao}
-                </text>
+                <div className="gauge-legend" style={{ marginTop: 6, display: 'flex', gap: 12, fontSize: 13 }}>
+                    <span style={{ color: '#28a745' }}>Sim: {sim} ({Math.round(simPercentage)}%)</span>
+                    <span style={{ color: '#dc3545' }}>Não: {nao} ({Math.round(naoPercentage)}%)</span>
+                </div>
             )}
 
+            <style>{`
+        .gauge-progress-sim,
+        .gauge-progress-nao {
+          transition: stroke-dasharray 600ms ease, stroke-dashoffset 600ms ease;
+        }
+      `}</style>
         </div>
     );
 };

@@ -19,4 +19,14 @@ export interface SessaoPautaDTO {
   status: string
   pautaTitulo: string;
   pautaDescricao: string;
+  resultado: Resultado;
 }
+
+export interface Resultado {
+  sim: number;
+  nao: number;
+  status: ResultadoStatus;
+}
+
+type ResultadoStatus = 'APROVADO' | 'REJEITADO' | 'EMPATE' ;
+

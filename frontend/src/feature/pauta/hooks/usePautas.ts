@@ -17,26 +17,32 @@ export function usePautas() {
   });
 
   const listaPautaAberta = useQuery<PautaResponseDTO[]>({
-    queryKey: ["pautas", "status", "ABERTA"], 
-    queryFn: () => pautaApi.listarPorStatus("ABERTA"), 
+    queryKey: ["pautas", "status", "ABERTA"],
+    queryFn: () => pautaApi.listarPorStatus("ABERTA"),
     staleTime: 60_000,
   });
 
-  const listaPautaDefinida = useQuery<PautaResponseDTO[]>({
-    queryKey: ["pautas", "status", "DEFINIDA"],
-    queryFn: () => pautaApi.listarPorStatus("DEFINIDA"), 
+  const listaPautaAprovada = useQuery<PautaResponseDTO[]>({
+    queryKey: ["pautas", "status", "APROVADA"],
+    queryFn: () => pautaApi.listarPorStatus("APROVADA"),
+    staleTime: 60_000,
+  });
+
+  const listaPautaReprovada = useQuery<PautaResponseDTO[]>({
+    queryKey: ["pautas", "status", "REPROVADA"],
+    queryFn: () => pautaApi.listarPorStatus("REPROVADA"),
     staleTime: 60_000,
   });
 
   const listaPautaVotando = useQuery<PautaResponseDTO[]>({
-    queryKey: ["pautas", "status", "VOTANDO"], 
-    queryFn: () => pautaApi.listarPorStatus("VOTANDO"), 
+    queryKey: ["pautas", "status", "VOTANDO"],
+    queryFn: () => pautaApi.listarPorStatus("VOTANDO"),
     staleTime: 60_000,
   });
 
   const buscarPorId = (id: number) =>
     useQuery<PautaResponseDTO>({
-      queryKey: ["pautas", "detalhe", id], 
+      queryKey: ["pautas", "detalhe", id],
       queryFn: () => pautaApi.buscarPorId(id),
       enabled: !!id,
     });
@@ -79,7 +85,8 @@ export function usePautas() {
     atualizarParcial,
     deletar,
     listaPautaAberta,
-    listaPautaDefinida,
+    listaPautaReprovada,
+    listaPautaAprovada,
     listaPautaVotando
   };
 }

@@ -37,7 +37,7 @@ public class SessaoService {
                     return new PautaNotFoundException(pautaId);
                 });
 
-        if (pauta.getStatus().equals(PautaStatus.VOTANDO) || pauta.getStatus().equals(PautaStatus.DEFINIDA)) {
+        if (!pauta.getStatus().equals(PautaStatus.ABERTA)) {
             logger.warn("Tentativa de criar sessão para pauta com status inválido - Pauta ID: {}, Status: {}",
                     pautaId, pauta.getStatus());
             throw new NegocioException("Não é possível criar pauta que está " + pauta.getStatus().toString().toLowerCase());
@@ -90,7 +90,8 @@ public class SessaoService {
                 sessao.getPauta().getId(),
                 sessao.getStatus(),
                 sessao.getPauta().getTitulo(),
-                sessao.getPauta().getDescricao()
+                sessao.getPauta().getDescricao(),
+                sessao.getResultado()
         );
     }
 
@@ -111,6 +112,7 @@ public class SessaoService {
 
     @Transactional
     public SessaoResponseDTO encerrarSessao(Long id) {
+
         logger.info("Encerrando sessão ID: {}", id);
         Sessao sessao = buscarEntidadePorId(id);
 
@@ -119,30 +121,52 @@ public class SessaoService {
             return sessaoMapper.toDTO(sessao);
         }
 
-        sessao.setStatus(SessaoStatus.ENCERRADA);
         sessao.setFechamento(LocalDateTime.now());
-        sessaoRepository.save(sessao);
+        sessao.setStatus(SessaoStatus.ENCERRADA);
+
         logger.debug("Sessão ID: {} marcada como encerrada", id);
 
-        Pauta pauta = pautaRepository.getReferenceById(sessao.getPauta().getId());
         Resultado resultado = resultadoService.calcularResultado(sessao.getId());
-        pauta.setResultado(resultado);
+
+        SessaoPatchDTO sessaoPatchDTO = new SessaoPatchDTO(resultado);
+
+        atualizarParcial(sessao.getId(), sessaoPatchDTO);
+        logger.info("Sessão ID: {} encerrada. Resultado: {}", id, resultado.getStatus());
+        sessaoRepository.save(sessao);
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        Pauta pauta = pautaRepository.getReferenceById(sessao.getPauta().getId());
+        //pauta.setResultado(resultado);
 
         if(resultado.getStatus() != ResultadoStatus.EMPATE){
-            pauta.setStatus(PautaStatus.DEFINIDA);
+          if(resultado.getSim()> resultado.getNao()){
+              pauta.setStatus(PautaStatus.APROVADA);
+          }else {
+              pauta.setStatus(PautaStatus.REPROVADA);
+          }
         } else {
             pauta.setStatus(PautaStatus.ABERTA);
         }
 
-        PautaPatchDTO patchDTO = new PautaPatchDTO(null, null, pauta.getStatus(), resultado);
+        PautaPatchDTO patchDTO = new PautaPatchDTO(null, null, pauta.getStatus());
         pautaService.atualizarParcial(pauta.getId(), patchDTO);
-
-        logger.info("Sessão ID: {} encerrada. Resultado: {}", id, resultado.getStatus());
         return sessaoMapper.toDTO(sessao);
     }
 
     public void deletar(Long id) {
         logger.error("Tentativa de deletar sessão ID: {}", id);
         throw new NegocioException("Não é permitido excluir uma sessão.");
+    }
+
+    public SessaoResponseDTO atualizarParcial(Long id, SessaoPatchDTO dto){
+        logger.info("Atualização parcial da sessao ID: {}", id);
+        Sessao entity = sessaoRepository.findById(id).
+                orElseThrow(() -> {
+                    logger.warn("Sessao não encontrada para atualização - ID: {}", id);
+                    return new SessaoNotFoundException(id);
+                });
+        sessaoMapper.updateFromPatch(dto, entity);
+        sessaoRepository.save(entity);
+        logger.debug("Sessão ID: {} atualizada", id);
+        return sessaoMapper.toDTO(entity);
     }
 }

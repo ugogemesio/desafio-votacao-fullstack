@@ -29,4 +29,4 @@ export interface Resultado {
   status: PautaStatus;
 }
 
-export type PautaStatus = 'ABERTA' | 'VOTANDO' | 'DEFINIDA';
+export type PautaStatus = 'ABERTA' | 'VOTANDO' | 'APROVADA' | 'REPROVADA';
