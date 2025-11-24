@@ -27,7 +27,6 @@ export const SessaoPage: React.FC = () => {
   }, { abertas: 0, fechadas: 0 });
 
   const handleCriarSessao = () => {
-    console.log('Abrindo modal de pautas...'); 
     pautasSessaoModal.open();
   };
 
@@ -38,7 +37,6 @@ export const SessaoPage: React.FC = () => {
   };
 
   const handleResultados = (sessaoId: number) => {
-    console.log('Ver resultados da sessão:', sessaoId);
   };
 
   const handleEnviarVoto = (voto: boolean, cpfAssociado: string) => {
@@ -129,7 +127,6 @@ export const SessaoPage: React.FC = () => {
         </section>
       </main>
 
-      {/* Modal de votação */}
       <VotoModal
         isOpen={votoModal.isOpen}
         onClose={handleCloseVotoModal}

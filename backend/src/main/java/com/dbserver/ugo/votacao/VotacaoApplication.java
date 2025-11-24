@@ -12,7 +12,5 @@ public class VotacaoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(VotacaoApplication.class, args);
         System.out.print("Bora");
-        System.out.print("Gerar DTOS");
-        System.out.print("Implementar teste");
 	}
 }

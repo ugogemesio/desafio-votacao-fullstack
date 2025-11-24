@@ -11,7 +11,7 @@ export interface PautaPutDTO {
 export interface PautaPatchDTO {
   descricao?: string;
   titulo?: string;
-  status?: string
+  status?: PautaStatus
 }
 
 export interface PautaResponseDTO {
@@ -20,11 +20,13 @@ export interface PautaResponseDTO {
   titulo: string;
   dataCriacao: string; 
   resultado: Resultado
-  status: string;
+  status: PautaStatus;
 }
 
 export interface Resultado {
   sim: number;
   nao: number;
-  status: string;
+  status: PautaStatus;
 }
+
+export type PautaStatus = 'ABERTA' | 'VOTANDO' | 'APROVADA' | 'REPROVADA';

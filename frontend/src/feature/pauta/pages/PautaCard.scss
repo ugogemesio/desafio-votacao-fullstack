@@ -1,127 +1,47 @@
 .pauta-card {
+
+  &--destaque {
+    border-left: 4px solid #007bff;
+  }
   &__resultado {
     display: flex;
     align-items: center;
     gap: 16px;
     margin-top: 8px;
   }
-
-  &__vote-actions {
-    display: flex;
-    gap: 8px;
-  }
-}
-
-.gauge-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  
-  .gauge {
-    &__fill {
-      transition: all 0.5s ease-in-out;
-      animation: gauge-fill 1s ease-out;
-    }
-    
-    &__percentage {
-      font-weight: bold;
-      dominant-baseline: middle;
-    }
-    
-    &__label {
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      dominant-baseline: middle;
-    }
-  }
-  
-  &__legend {
-    margin-top: 8px;
-    display: flex;
-    gap: 12px;
-    
-    &-item {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    
-    &-color {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      display: inline-block;
-    }
-    
-    &-text {
-      font-size: 10px;
-      color: #6c757d;
-      font-weight: 500;
-    }
-  }
-}
-
-@keyframes gauge-fill {
-  from {
-    stroke-dashoffset: 226.194;
-  }
-  to {
-    stroke-dashoffset: current;
-  }
-}
-
-.pauta-card {
-  &--destaque {
-    border-left: 4px solid #007bff;
-  }
-  
   &__status {
     padding: 4px 8px;
     border-radius: 12px;
     font-size: 12px;
     font-weight: bold;
-    
     &--aberta {
       background-color: #e3f2fd;
       color: #1976d2;
     }
-    
     &--votacao {
       background-color: #fff3e0;
       color: #f57c00;
     }
-    
     &--fechada {
       background-color: #f5f5f5;
       color: #757575;
     }
   }
-  
-  &__titulo {
-    margin: 0;
-    font-size: 16px;
-    color: #333;
-  }
-  
   &__descricao {
     color: #666;
     margin: 8px 0;
     line-height: 1.4;
   }
-  
   &__data {
     font-size: 12px;
     color: #888;
   }
-  
   &__footer {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     margin-top: 16px;
   }
-  
   &__info {
     display: flex;
     flex-direction: column;

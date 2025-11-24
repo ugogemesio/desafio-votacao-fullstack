@@ -1,8 +1,57 @@
+# =====================
+# Geral / Sistema Operacional
+# =====================
+.DS_Store
+Thumbs.db
+
+# =====================
+# Logs
+# =====================
+logs/
+*.log
+
+# =====================
+# IDE / Editor
+# =====================
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# =====================
+# Backend - Java / Gradle
+# =====================
 backend/.env
 backend/.gradle/
-backend/*.hprof
-
-frontend/.vite/
-.idea/
-backend/.idea/
 backend/build/
+backend/*.hprof
+backend/src/main/resources/application-local.yml
+
+# =====================
+# Frontend - Node / Vite
+# =====================
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/.vite/
+frontend/*.local
+
+# =====================
+# Pacotes / Logs Node
+# =====================
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# =====================
+# Arquivos temporários
+# =====================
+*.tmp
+*.bak
+*.swp

@@ -1,5 +1,7 @@
 package com.dbserver.ugo.votacao.sessao;
 
+import com.dbserver.ugo.votacao.resultado.Resultado;
+
 import java.time.LocalDateTime;
 
 public class SessaoPautaDTO {
@@ -12,6 +14,7 @@ public class SessaoPautaDTO {
     private SessaoStatus status;
     private String pautaTitulo;
     private String pautaDescricao;
+    private Resultado resultado;
 
     public SessaoPautaDTO(Long id,
                           LocalDateTime abertura,
@@ -20,7 +23,8 @@ public class SessaoPautaDTO {
                           Long pautaId,
                           SessaoStatus status,
                           String pautaTitulo,
-                          String pautaDescricao) {
+                          String pautaDescricao,
+                          Resultado resultado) {
         this.id = id;
         this.abertura = abertura;
         this.fechamento = fechamento;
@@ -29,6 +33,7 @@ public class SessaoPautaDTO {
         this.status = status;
         this.pautaTitulo = pautaTitulo;
         this.pautaDescricao = pautaDescricao;
+        this.resultado = resultado;
     }
 
 
@@ -94,5 +99,12 @@ public class SessaoPautaDTO {
 
     public void setPautaDescricao(String pautaDescricao) {
         this.pautaDescricao = pautaDescricao;
+    }
+
+    public void setResultado(Resultado resultado){
+        this.resultado = resultado;
+    }
+    public Resultado getResultado(){
+        return resultado;
     }
 }

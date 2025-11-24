@@ -45,11 +45,17 @@ public class Sessao {
     @Column(nullable = false)
     private SessaoStatus status;
 
+    @Embedded
+    private Resultado resultado;
+
     @PrePersist
     void onCreate() {
         this.abertura = LocalDateTime.now();
         this.duracaoMinutos = (duracaoMinutos == null ? 1 : duracaoMinutos);
         this.fechamento = abertura.plusMinutes(duracaoMinutos == null ? 1 : duracaoMinutos);
         this.status = SessaoStatus.ABERTA;
+        if (this.resultado == null) {
+            this.resultado = new Resultado(0, 0);
+        }
     }
 }

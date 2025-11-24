@@ -24,7 +24,7 @@ export const PautaPage: React.FC = () => {
 
   const stats = pautas.reduce((acc, p) => {
     if (p.status === 'ABERTA') acc.abertas++;
-    if (p.status === 'DEFINIDA') acc.fechadas++;
+    if (p.status === 'APROVADA' || p.status === 'REPROVADA') acc.fechadas++;
     if (p.status === 'VOTANDO') acc.votando++;
     return acc;
   }, { abertas: 0, fechadas: 0, votando: 0 });
@@ -47,7 +47,7 @@ export const PautaPage: React.FC = () => {
   };
 
   const handleResultados = (pautaId: number) => {
-    console.log('Ver resultados da pauta:', pautaId);
+
   };
 
   const handleAbrirSessaoPauta = (pautaId: number) => {

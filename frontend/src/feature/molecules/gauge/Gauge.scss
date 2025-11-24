@@ -1,0 +1,17 @@
+.gauge-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gauge-progress {
+  transition: stroke-dashoffset 0.8s ease;
+}
+
+.gauge-legend {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #444;
+  display: flex;
+  gap: 16px;
+}

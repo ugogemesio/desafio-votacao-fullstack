@@ -12,21 +12,14 @@ export function AppRoutes() {
   return (
     
       <Routes>
-        {/* Página de login */}
         <Route path="/login" element={<LoginPage />} />
-
-        {/* Rotas privadas */}
         <Route >
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/pautas" element={<PautaPage />} />
-
-          <Route path="/associados" element={<AssociadosPage />} />
-          {/* <Route path="/pautas" element={<PautasPage />} /> */}
+          <Route path="/associados" element={<AssociadosPage />} /> {/*  USADA PARA TESTES */}
           <Route path="/sessoes" element={<SessaoPage />} />
           <Route path="/votar/:sessaoId" element={<VotarPage />} />
         </Route>
-
-        {/* Página de erro 404 */}
         <Route path="*" element={<h1>404 - Página não encontrada</h1>} />
       </Routes>
     
