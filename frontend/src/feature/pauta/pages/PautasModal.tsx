@@ -26,9 +26,6 @@ export const PautasParaSessaoModal: React.FC<PautasParaSessaoModal> = ({
   } | null>(null);
 
 
-  console.log('Lista de pautas abertas:', listaPautaAberta.data);
-  console.log('Loading:', listaPautaAberta.isLoading);
-  console.log('Error:', listaPautaAberta.error);
 
   const pautasAbertas = listaPautaAberta.data || [];
   const loading = listaPautaAberta.isLoading;

@@ -23,7 +23,6 @@ export const VotoModal: React.FC<VotoModalProps> = ({
   const [votoSelecionado, setVotoSelecionado] = useState<boolean | null>(null);
   
   const cpfSalvo = localStorage.getItem('cpfAssociado');
-  console.log('CPF salvo:', cpfSalvo);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

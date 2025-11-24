@@ -47,7 +47,7 @@ export const PautaPage: React.FC = () => {
   };
 
   const handleResultados = (pautaId: number) => {
-    console.log('Ver resultados da pauta:', pautaId);
+
   };
 
   const handleAbrirSessaoPauta = (pautaId: number) => {

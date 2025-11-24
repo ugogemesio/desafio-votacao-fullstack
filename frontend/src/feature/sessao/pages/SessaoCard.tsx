@@ -27,7 +27,6 @@ export const SessaoCard: React.FC<SessaoCardProps> = ({
   };
 
   const statusInfo = getStatusInfo(sessao.status);
-  console.log(statusInfo)
   const formatarData = (data: string) => {
     return new Date(data).toLocaleString('pt-BR');
   };
