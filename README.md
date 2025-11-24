@@ -276,6 +276,29 @@ Ao encerrar, o sistema calcula e armazena os resultados automaticamente.
 - **Integração**: Integração simples com redis(branch v0.8).
 - **Performance**: Cenário de 100.000 votos processados em ~11s com Redis(branch v0.8).
 
+Detalhes do Teste de Stress
+
+Para validar a performance do sistema ao processar um grande volume de votos simultaneamente, foi implementado um teste de stress com Redis:
+
+Foram simulados 100.000 associados votando em uma mesma sessão.
+
+Um pool de 8 threads foi utilizado para processar os votos de forma concorrente.
+
+O Redis foi usado para garantir que cada associado votasse apenas uma vez, evitando duplicidade sem travar o banco.
+
+Os votos foram processados em batch de 1.000 registros, para reduzir overhead de gravação no banco.
+
+Resultados obtidos:
+
+```bash
+
+2025-11-24 05:42:45.465 [Test worker] INFO  c.d.u.v.v.VotoRedisPerformanceTest - Início do teste de stress com 100000 associados
+2025-11-24 05:42:52.207 [Test worker] INFO  c.d.u.v.v.VotoRedisPerformanceTest - === RESULTADOS DO TESTE ===
+2025-11-24 05:42:52.208 [Test worker] INFO  c.d.u.v.v.VotoRedisPerformanceTest - Total de associados: 100000
+2025-11-24 05:42:52.208 [Test worker] INFO  c.d.u.v.v.VotoRedisPerformanceTest - Votos processados: 100000
+2025-11-24 05:42:52.208 [Test worker] INFO  c.d.u.v.v.VotoRedisPerformanceTest - Votos duplicados bloqueados: 0
+2025-11-24 05:42:52.208 [Test worker] INFO  c.d.u.v.v.VotoRedisPerformanceTest - Throughput: 14832 votos/s
+```
 ---
 
 ## Limitações Conhecidas
