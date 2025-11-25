@@ -37,7 +37,7 @@ public class Pauta {
     private List<Sessao> sessoes = new ArrayList<>();
 
     @Embedded
-    private Resultado resultado;
+    private Resultado resultado; //afim de simplificar, há resultado da pauta e resultado da sessao
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
