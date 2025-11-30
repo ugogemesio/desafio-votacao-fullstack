@@ -14,15 +14,16 @@ Sistema de votação online para cooperativas, permitindo que associados cadastr
 1. [Objetivo](#objetivo)
 2. [Funcionalidades](#funcionalidades)
 3. [Tecnologias](#tecnologias)
-4. [Arquitetura do Sistema](#arquitetura-do-sistema)
-5. [Branches](#branches)
-6. [Fluxo de Uso](#fluxo-de-uso)
-7. [Execução do Projeto](#execucao-do-projeto)
-8. [Documentação da API (Swagger)](#documentacao-da-api-swagger)
-9. [Decisões Técnicas Relevantes](#decisoes-tecnicas-relevantes)
-10. [Testes & Performance](#testes--performance)
-11. [Limitações Conhecidas](#limitacoes-conhecidas)
-12. [Contribuição](#contribuicao)
+4. [Banco de Dados](#banco-de-dados)
+5. [Arquitetura do Sistema](#arquitetura-do-sistema)
+6. [Branches](#branches)
+7. [Fluxo de Uso](#fluxo-de-uso)
+8. [Execução do Projeto](#execucao-do-projeto)
+9. [Documentação da API (Swagger)](#documentacao-da-api-swagger)
+10. [Decisões Técnicas Relevantes](#decisoes-tecnicas-relevantes)
+11. [Testes & Performance](#testes--performance)
+12. [Limitações Conhecidas](#limitacoes-conhecidas)
+13. [Contribuição](#contribuicao)
 
 ---
 
@@ -75,6 +76,46 @@ Criar uma solução para gerenciar assembleias de cooperativas, com funcionalida
 
 ---
 
+## Banco de Dados
+Configuração do Banco de Dados
+
+O sistema utiliza PostgreSQL para persistência dos dados e Flyway para gerenciar migrações de tabelas.
+
+
+Instalação do PostgreSQL
+
+Linux (Ubuntu/Debian):
+```bash
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+```
+
+Windows / macOS: Baixe o instalador oficial do PostgreSQL em https://www.postgresql.org/download/
+
+Criar o Banco de Dados e Usuário
+
+No terminal do PostgreSQL (psql) ou via dbeaver etc crie o banco e o usuário do projeto:
+```bash
+-- Criar usuário
+CREATE USER desafiovotacao WITH PASSWORD 'minha_senha_aqui';
+-- Criar banco de dados
+CREATE DATABASE desafiovotacao OWNER desafiovotacao;
+-- Dar permissões
+GRANT ALL PRIVILEGES ON DATABASE desafiovotacao TO desafiovotacao;
+```
+Substitua 'minha_senha_aqui' por uma senha segura de sua preferência.
+---
+
+Configurar Variáveis de Ambiente
+
+O backend do Spring Boot lê as credenciais do banco a partir de variáveis de ambiente:
+```bash
+export SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/desafiovotacao
+export SPRING_DATASOURCE_PASSWORD=minha_senha_aqui
+```
+O usuário é fixo como desafiovotacao (definido no application.yml).
+
+As credenciais, porta e etc, podem ser variáveis; 
 ## Arquitetura do Sistema
 
 ### Conceito
@@ -97,15 +138,13 @@ Criar uma solução para gerenciar assembleias de cooperativas, com funcionalida
 
 ## Branches
 
-O repositório está sendo organizado em três branches principais:
+O repositório está sendo organizado em duas branches principais:
 
 - **`dev`** – Branch de desenvolvimento  (atual v0.1)
   Todas as novas funcionalidades e ajustes são feitos aqui. Testes e experimentos iniciais ocorrem nesta branch.
 
-- **`teste`** – Branch de testes e integração  (atual v0.8)
-  Recebe merges da `dev` quando as funcionalidades estão estáveis. Usada para validação de integração e testes de performance. Não deve conter alterações instáveis.
 
-- **`deploy`** – Branch de produção / deployment  (migrar para main )
+- **`deploy`** – Branch de produção / deployment  (atual main )
   Contém a versão final e estável do sistema. Usada para deploy em nuvem e demonstração. Apenas merges da branch `teste` são permitidos.
 
 **Fluxo recomendado:**  
@@ -116,17 +155,14 @@ O repositório está sendo organizado em três branches principais:
 
 O repositório está sendo organizado em três branches principais, cada uma com um propósito específico. Atualmente, a nomenclatura e commits ainda estão em transição:
 
-- **`dev`** – Branch de desenvolvimento (atualmente v0.1)  
+- **`dev`** – Branch de desenvolvimento (v0.1)  
   Todas as novas funcionalidades e ajustes são feitos aqui. Testes e experimentos iniciais ocorrem nesta branch.
 
-- **`teste`** – Branch de testes e integração (atualmente v0.8)  
-  Recebe merges da `dev` quando as funcionalidades estão estáveis. Usada para validação de integração e testes de performance. Não deve conter alterações instáveis.
 
-- **`deploy`** – Branch de produção / deployment (planejada para migrar para `main`)  
-  Contém a versão final e estável do sistema. Usada para deploy em nuvem e demonstração. Recebe merges da branch `teste` .
+- **`deploy`** – Branch de produção / deployment (main)  
+  Contém a versão final e estável do sistema. Usada para deploy em nuvem e demonstração.
 
->  O fluxo ideal é `dev` → `teste` → `deploy`. A ideia era/é alinhar a nomenclatura das branches com o padrão final após estabilização do projeto.
-
+>  O fluxo ideal é `dev` →  `deploy`. 
 ## Fluxo de Uso
 
 ```
