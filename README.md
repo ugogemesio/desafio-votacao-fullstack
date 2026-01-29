@@ -4,6 +4,8 @@ Sistema de votação online para cooperativas, permitindo que associados cadastr
 
 **Demo:** [Aplicação em nuvem](https://desafio-votacao-fullstack-front-v03.vercel.app)
 
+aplicação está fora. logo irei resolver
+
 **Backend:** Java 17 + Spring Boot 3.5.7  
 **Frontend:** React 19 + TypeScript 5.9
 
