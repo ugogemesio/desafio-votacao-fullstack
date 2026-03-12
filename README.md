@@ -1,4 +1,5 @@
 # Desafio Votação – Sistema de Gerenciamento de Votos
+<img width="1587" height="1288" alt="image" src="https://github.com/user-attachments/assets/2200e518-e709-4589-8ae6-55f5a14c7f23" />
 
 Sistema de votação online para cooperativas, permitindo que associados cadastrem pautas, participem de sessões de votação e visualizem resultados de forma segura e persistente.
 
